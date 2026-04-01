@@ -1,0 +1,284 @@
+{
+  "models": [
+    {
+      "name": "DeepSeek-R1-0528_cot",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "Devstral-Small-2505",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "OlympicCoder-32B_cot",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "OlympicCoder-7B_cot",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "OpenCodeReasoning-Nemotron-1.1-32B_cot",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "OpenReasoning-Nemotron-32B_cot",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "Qwen2.5-Coder-14B-Instruct",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "Qwen2.5-Coder-32B-Instruct",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "Qwen3-14B_cot",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "Qwen3-235B-A22B-Instruct-2507",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "Qwen3-235B-A22B-Thinking-2507_cot",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "Qwen3-235B-A22B_cot",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "Qwen3-30B-A3B-Instruct-2507",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "Qwen3-30B-A3B-Thinking-2507_cot",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "Qwen3-30B-A3B_cot",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "Qwen3-32B_cot",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "Qwen3-8B_cot",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "Qwen3-Coder-30B-A3B-Instruct",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "Seed-Coder-8B-Instruct",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "deepseek-coder-33b-instruct",
+      "files": {
+        "cpp": "cpp_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "ruby": "ruby_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MultiLCB — Multi Live Code Bench</title>
+  <link rel="icon" href="./assets/logo.svg" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+    .page-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 72px;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 24px;
+      z-index: 100;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .header-logo-link {
+      position: relative;
+      z-index: 101;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, #e2e8f0, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: transform 0.3s;
+      white-space: nowrap;
+    }
+    .header-logo-link:hover { transform: scale(1.05); }
+    .header-left { display: flex; align-items: center; gap: 16px; }
+    .header-nav { display: flex; align-items: center; gap: 16px; }
+    .nav-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 14px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 10px;
+      color: #cbd5e1; font-size: 14px; font-weight: 600;
+      transition: transform 0.3s, background 0.3s, border-color 0.3s;
+      cursor: pointer; background: transparent;
+    }
+    .nav-btn:hover { transform: scale(1.05); background: rgba(99, 102, 241, 0.1); border-color: rgba(99, 102, 241, 0.4); color: #e2e8f0; }
+    .nav-btn img { width: 16px; height: 16px; filter: brightness(0) invert(0.8); }
+    .nav-btn.active-nav {
+      background: rgba(167, 139, 250, 0.12);
+      border-color: rgba(167, 139, 250, 0.4);
+      color: #c4b5fd;
+    }
+
+    /* ===== LANGUAGE TOGGLE — in header ===== */
+    .lang-toggle {
+      display: flex;
+      background: rgba(51, 65, 85, 0.5);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid #475569;
+    }
+    .lang-toggle button {
+      padding: 5px 12px; border: none; background: transparent;
+      color: #94a3b8; font-family: 'Inter', sans-serif;
+      font-size: 12px; font-weight: 600; cursor: pointer;
+      text-transform: uppercase; transition: background 0.3s, color 0.3s;
+    }
+    .lang-toggle button.active {
+      background: rgba(99, 102, 241, 0.3); border-radius: 20px;
+      color: #e2e8f0;
+    }
+
+    /* ===== NEWS PAGE ===== */
+    .news-page {
+      width: 100%; max-width: 700px;
+      margin-top: 100px;
+    }
+    .news-page h2 {
+      font-size: clamp(1.25rem, 2vw, 2.2rem);
+      font-weight: 700; margin-bottom: 28px; color: #f1f5f9;
+      text-align: center;
+    }
+    .news-timeline {
+      position: relative;
+      padding-left: 28px;
+    }
+    .news-timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px; top: 0; bottom: 0;
+      width: 3px; border-radius: 3px;
+      background: linear-gradient(180deg, #6366f1, #8b5cf6);
+    }
+    .news-item {
+      position: relative;
+      margin-bottom: 16px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      overflow: hidden;
+    }
+    .news-item:hover {
+      transform: translateX(4px);
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+    .news-item::before {
+      content: '';
+      position: absolute;
+      left: -24px; top: 22px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: #6366f1;
+      border: 3px solid #0f172a;
+      box-shadow: 0 0 0 2px #6366f1;
+    }
+    .news-summary {
+      padding: 16px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+    .news-summary:hover { background: rgba(99, 102, 241, 0.05); }
+    .news-summary-left { display: flex; align-items: center; gap: 12px; }
+    .news-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; font-weight: 600;
+      color: #a5b4fc; background: #312e81;
+      padding: 3px 10px; border-radius: 6px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .news-title-text {
+      font-size: 15px; color: #e2e8f0; font-weight: 600;
+    }
+    .news-chevron {
+      font-size: 14px; color: #64748b;
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+    .news-item.open .news-chevron { transform: rotate(180deg); }
+    .news-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      padding: 0 20px;
+    }
+    .news-item.open .news-body {
+      max-height: 200px;
+      padding: 0 20px 16px 20px;
+    }
+    .news-body-text {
+      font-size: 14px; color: #94a3b8; line-height: 1.6;
+    }
+
+    /* ===== INTRO ===== */
+    .intro {
+      margin-top: 100px;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 16px; text-align: center;
+      max-width: 960px; padding: 0 16px;
+    }
+    .intro-logo { width: 120px; }
+    .intro h3 {
+      font-size: clamp(1.1rem, 1.5vw, 1.6rem);
+      font-weight: 600; color: #e2e8f0;
+    }
+    .intro-links {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      justify-content: center; margin-bottom: 10px;
+    }
+    .intro-link-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 10px;
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      background: linear-gradient(135deg, #4338ca 0%, #7c3aed 100%);
+      color: #f1f5f9; font-size: clamp(0.7rem, 1vw, 1rem);
+      font-weight: 500; transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 2px 12px rgba(99, 102, 241, 0.25);
+    }
+    .intro-link-btn:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4); }
+    .intro-link-btn img { width: 16px; height: 16px; }
+
+    /* ===== MAIN ===== */
+    .main {
+      display: flex; flex-direction: column; align-items: center;
+      margin-top: 40px; margin-bottom: 60px;
+      padding: 0 16px; width: 100%; max-width: 1200px;
+    }
+
+    /* ===== DESCRIPTION ===== */
+    .description { max-width: 960px; text-align: center; }
+    .description h2 {
+      font-size: clamp(1.25rem, 2vw, 2.2rem);
+      font-weight: 700; margin-bottom: 24px; color: #fff;
+    }
+    .description p {
+      font-size: clamp(0.9rem, 1.2vw, 1.15rem);
+      line-height: 1.7; color: #cbd5e1; padding: 0 20px;
+    }
+    .poster-img {
+      width: 100%; max-width: 960px;
+      margin-top: 32px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+      display: block;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .poster-img:hover {
+      transform: scale(1.01);
+      box-shadow: 0 8px 32px rgba(99, 102, 241, 0.2);
+    }
+    /* Fullscreen lightbox */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.92);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+      cursor: zoom-out;
+      padding: 20px;
+    }
+    .lightbox-overlay.active { display: flex; }
+    .lightbox-overlay img {
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+      cursor: zoom-in;
+      transition: max-width 0.3s, max-height 0.3s;
+    }
+    .lightbox-overlay[data-zoom="medium"] img {
+      max-width: 70vw;
+      max-height: 80vh;
+    }
+    .lightbox-overlay[data-zoom="full"] img {
+      max-width: 98vw;
+      max-height: 98vh;
+      cursor: zoom-out;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px; right: 30px;
+      font-size: 36px; color: #e2e8f0;
+      cursor: pointer; font-weight: 300;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .lightbox-close:hover { color: #fff; }
+
+    /* ===== LEADERBOARD ===== */
+    .leaderboard-page {
+      margin-top: 100px;
+      width: 100%; max-width: 1180px;
+    }
+    .leaderboard-title {
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      font-weight: 800;
+      color: #f1f5f9;
+      text-align: center;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #e2e8f0, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .leaderboard-wrapper {
+      width: 100%;
+      border: 1px solid #334155; border-radius: 16px;
+      padding: 24px; background: #1e293b;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+
+    /* ===== DUAL RANGE SLIDER ===== */
+    .slider-section { margin-bottom: 24px; }
+    .slider-section > label {
+      font-size: 14px; font-weight: 600; color: #94a3b8;
+      display: block; margin-bottom: 12px;
+    }
+    .slider-info {
+      font-size: 14px; font-weight: 600; color: #a5b4fc;
+      margin-bottom: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .slider-dates {
+      display: flex; justify-content: space-between; margin-bottom: 4px;
+    }
+    .slider-ticks {
+      display: flex; justify-content: space-between;
+      padding: 6px 0 0 0;
+    }
+    .slider-tick {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; font-weight: 500;
+      color: #64748b;
+    }
+    .slider-date-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; font-weight: 600;
+      color: #a5b4fc; background: #312e81;
+      padding: 4px 12px; border-radius: 6px;
+    }
+    .dual-range {
+      position: relative; height: 36px; width: 100%;
+    }
+    .dual-range input[type="range"] {
+      -webkit-appearance: none; appearance: none;
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 36px;
+      background: transparent; pointer-events: none;
+      z-index: 3;
+    }
+    .dual-range input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: #6366f1;
+      border: 3px solid #1e293b;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+      cursor: pointer;
+      pointer-events: auto;
+      position: relative; z-index: 3;
+    }
+    .dual-range input[type="range"]::-moz-range-thumb {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: #6366f1;
+      border: 3px solid #1e293b;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+      cursor: pointer;
+      pointer-events: auto;
+    }
+    .dual-range input[type="range"]::-webkit-slider-runnable-track {
+      height: 6px; border-radius: 3px; background: transparent;
+    }
+    .dual-range input[type="range"]::-moz-range-track {
+      height: 6px; border-radius: 3px; background: transparent;
+    }
+    .dual-range .track {
+      position: absolute;
+      top: 15px; left: 0; right: 0;
+      height: 6px; border-radius: 3px;
+      background: #334155;
+    }
+    .dual-range .track-active {
+      position: absolute;
+      top: 15px; height: 6px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    }
+
+    /* ===== LANGUAGE FILTER ===== */
+    .lang-filter {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 20px; align-items: center;
+    }
+    .lang-filter-title {
+      font-size: 14px; font-weight: 600; color: #94a3b8;
+      width: 100%; margin-bottom: 4px;
+    }
+    .lang-chip {
+      display: flex; align-items: center; gap: 4px;
+      padding: 3px 8px;
+      border-radius: 8px;
+      background: rgba(51, 65, 85, 0.4);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .lang-chip:hover {
+      background: rgba(99, 102, 241, 0.1);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+    .lang-chip input[type="checkbox"] {
+      accent-color: #6366f1;
+      width: 14px; height: 14px; cursor: pointer;
+    }
+    .lang-chip img.lang-logo {
+      width: 18px; height: 18px;
+      object-fit: contain;
+      border-radius: 2px;
+    }
+    .lang-chip label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; font-weight: 500;
+      color: #94a3b8; cursor: pointer; user-select: none;
+    }
+
+    /* ===== TABLE ===== */
+    .table-container { width: 100%; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      position: sticky; top: 0; background: #0f172a;
+      padding: 12px 14px; text-align: left;
+      font-size: 13px; font-weight: 700; color: #94a3b8;
+      white-space: nowrap; border-bottom: 2px solid #334155;
+      cursor: pointer; user-select: none; transition: background 0.2s;
+    }
+    thead th:hover { background: #1e293b; }
+    thead th:first-child { cursor: default; }
+    thead th:first-child:hover { background: #0f172a; }
+    thead th .sort-icon { margin-left: 4px; opacity: 0.5; }
+    thead th .sort-icon.active { opacity: 1; color: #818cf8; }
+    tbody td {
+      padding: 10px 14px; font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500; color: #cbd5e1;
+    }
+    tbody tr { border-bottom: 1px solid #1e293b; transition: background 0.15s; }
+    tbody tr:hover { background: #334155; }
+    td.model-name {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600; color: #f1f5f9; white-space: nowrap;
+    }
+
+    /* ===== RANK BADGES ===== */
+    .rank-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 50%;
+      font-weight: 700; font-size: 13px; font-family: 'Inter', sans-serif;
+    }
+    .rank-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #92400e; box-shadow: 0 2px 10px rgba(251,191,36,0.35); }
+    .rank-2 { background: linear-gradient(135deg, #94a3b8, #64748b); color: #f1f5f9; box-shadow: 0 2px 10px rgba(148,163,184,0.3); }
+    .rank-3 { background: linear-gradient(135deg, #f97316, #ea580c); color: #fff; box-shadow: 0 2px 10px rgba(249,115,22,0.35); }
+    .rank-other { background: #334155; color: #94a3b8; border: 1px solid #475569; }
+
+    .no-data {
+      text-align: center; padding: 80px 20px;
+      color: #94a3b8; font-size: 16px; font-weight: 500;
+    }
+    .hidden { display: none !important; }
+
+    /* ===== COMPARE PAGE ===== */
+    .compare-page {
+      margin-top: 100px;
+      width: 100%; max-width: 1000px;
+    }
+    .compare-wrapper {
+      width: 100%;
+      border: 1px solid #334155; border-radius: 16px;
+      padding: 28px; background: #1e293b;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .compare-selector-section {
+      margin-bottom: 24px;
+    }
+    .compare-selector-label {
+      font-size: 14px; font-weight: 600; color: #94a3b8;
+      margin-bottom: 12px; display: block;
+    }
+    .compare-selected-models {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 12px; min-height: 38px; align-items: center;
+    }
+    .compare-model-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px; border-radius: 20px;
+      font-size: 13px; font-weight: 600;
+      color: #f1f5f9; cursor: default;
+      border: 1px solid transparent;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .compare-model-chip:hover { transform: scale(1.03); }
+    .compare-model-chip .chip-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .compare-model-chip .chip-remove {
+      width: 18px; height: 18px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700;
+      color: rgba(255,255,255,0.6); cursor: pointer;
+      background: rgba(255,255,255,0.1);
+      border: none; line-height: 1;
+      transition: background 0.2s, color 0.2s;
+    }
+    .compare-model-chip .chip-remove:hover {
+      background: rgba(255,255,255,0.25); color: #fff;
+    }
+    .compare-add-wrapper {
+      position: relative; display: inline-block;
+    }
+    .compare-add-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 6px 14px; border-radius: 20px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px dashed rgba(99, 102, 241, 0.5);
+      color: #a5b4fc; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: background 0.2s, border-color 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .compare-add-btn:hover {
+      background: rgba(99, 102, 241, 0.25);
+      border-color: rgba(99, 102, 241, 0.7);
+    }
+    .compare-add-btn:disabled {
+      opacity: 0.4; cursor: not-allowed;
+    }
+    .compare-dropdown {
+      position: absolute; top: 100%; left: 0;
+      margin-top: 6px; z-index: 50;
+      background: #1e293b; border: 1px solid #475569;
+      border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      max-height: 260px; overflow-y: auto; min-width: 280px;
+      display: none;
+    }
+    .compare-dropdown.open { display: block; }
+    .compare-dropdown-search {
+      width: 100%; padding: 10px 14px;
+      background: #0f172a; border: none;
+      border-bottom: 1px solid #334155;
+      color: #e2e8f0; font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      outline: none; border-radius: 12px 12px 0 0;
+    }
+    .compare-dropdown-search::placeholder { color: #64748b; }
+    .compare-dropdown-item {
+      padding: 9px 14px; cursor: pointer;
+      font-size: 13px; font-weight: 500; color: #cbd5e1;
+      transition: background 0.15s;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .compare-dropdown-item:hover { background: rgba(99, 102, 241, 0.12); }
+    .compare-dropdown-item:last-child { border-radius: 0 0 12px 12px; }
+    .compare-dropdown-item .dd-avg {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; color: #a5b4fc; font-weight: 600;
+    }
+    .compare-chart-container {
+      position: relative;
+      width: 100%; max-width: 700px;
+      margin: 0 auto;
+      aspect-ratio: 1;
+    }
+    .compare-chart-container canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .compare-hint {
+      text-align: center; padding: 60px 20px;
+      color: #64748b; font-size: 15px; font-weight: 500;
+    }
+
+    @media (max-width: 640px) {
+      .header { padding: 0 12px; height: 64px; }
+      .header-logo { height: 64px; }
+      .nav-btn { font-size: 12px; padding: 4px 10px; }
+      .intro { margin-top: 80px; }
+      .intro-logo { width: 80px; }
+      .leaderboard-wrapper { padding: 12px; }
+      .leaderboard-title { font-size: clamp(1.4rem, 2.5vw, 2rem); }
+      .lang-toggle-fixed { bottom: 12px; left: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <a href="#/" class="header-logo-link">MULTI-LCB</a>
+      <a class="nav-btn" href="https://github.com/Multi-LCB/Multi-LiveCodeBench" target="_blank">
+        <img src="./assets/codeLogo.svg" alt="" /> Code
+      </a>
+      <a class="nav-btn" href="https://huggingface.co/datasets/" target="_blank">
+        <img src="./assets/dataLogo.svg" alt="" /> Hf
+      </a>
+      <a class="nav-btn" href="https://github.com/Multi-LCB/Multi-LiveCodeBench" target="_blank">
+        <img src="./assets/cupLogo.svg" alt="" /> Submit
+      </a>
+    </div>
+    <nav class="header-nav">
+      <a class="nav-btn" href="#/" id="navMain">
+        🏠 <span data-text="home">Main</span>
+      </a>
+      <a class="nav-btn" href="#/leaderboard" id="navLeaderboard">
+        <img src="./assets/leaderBoarIcon.svg" alt="" />
+        <span data-text="leaderboard">Leaderboard</span>
+      </a>
+      <a class="nav-btn" href="#/compare" id="navCompare">
+        🕸️ <span data-text="compare">Compare</span>
+      </a>
+      <a class="nav-btn" href="#/news" id="navNews">
+        📰 <span data-text="news">News</span>
+      </a>
+      <div class="lang-toggle" id="langToggle">
+        <button id="btnEng" class="active" onclick="setLang('eng')">ENG</button>
+        <button id="btnRu" onclick="setLang('ru')">RU</button>
+        <button id="btnCn" onclick="setLang('cn')">中文</button>
+        <button id="btnHe" onclick="setLang('he')">עבר</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- INTRO (only visible on main page) -->
+  <section class="intro" id="intro-section">
+    <img class="intro-logo" src="./assets/new_logo.png" alt="MultiLCB Logo" />
+    <h2 class="leaderboard-title" data-text="header">Multi LiveCodeBench</h2>
+  </section>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- DESCRIPTION PAGE (Main) -->
+    <div id="page-description" class="description">
+      <h2 data-text="headerBlockFirst">Description</h2>
+      <p data-text="textBlockFirst"></p>
+      <img class="poster-img" id="posterImg" src="./poster.png" alt="MultiLCB Poster" onclick="cyclePosterZoom(this)" />
+    </div>
+
+    <!-- LEADERBOARD PAGE -->
+    <div id="page-leaderboard" class="leaderboard-page hidden">
+      <h2 class="leaderboard-title">Multi LiveCodeBench Leaderboard</h2>
+      <div class="leaderboard-wrapper">
+        <!-- Dual range date slider -->
+        <div class="slider-section">
+          <label data-text="dateRange">Date range</label>
+          <div class="slider-info" id="sliderInfo"></div>
+          <div class="slider-dates">
+            <span class="slider-date-label" id="startDateLabel">—</span>
+            <span class="slider-date-label" id="endDateLabel">—</span>
+          </div>
+          <div class="dual-range" id="dualRange">
+            <div class="track"></div>
+            <div class="track-active" id="trackActive"></div>
+            <input type="range" id="sliderStart" min="0" max="100" value="0" />
+            <input type="range" id="sliderEnd" min="0" max="100" value="100" />
+          </div>
+          <div class="slider-ticks" id="sliderTicks"></div>
+        </div>
+
+        <!-- Language filter -->
+        <div class="lang-filter" id="langFilter">
+          <span class="lang-filter-title" data-text="filterLangs">Filter languages:</span>
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+          <table id="leaderTable">
+            <thead id="tableHead"></thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+          <div class="no-data hidden" id="noData">
+            <span data-text="notExistedData">No data for this period</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPARE PAGE -->
+    <div id="page-compare" class="compare-page hidden">
+      <h2 class="leaderboard-title" data-text="compareTitle">Model Comparison</h2>
+      <div class="compare-wrapper">
+        <!-- Date slider for compare -->
+        <div class="slider-section">
+          <label data-text="dateRange">Date range</label>
+          <div class="slider-info" id="compareSliderInfo"></div>
+          <div class="slider-dates">
+            <span class="slider-date-label" id="compareStartDateLabel">—</span>
+            <span class="slider-date-label" id="compareEndDateLabel">—</span>
+          </div>
+          <div class="dual-range" id="compareDualRange">
+            <div class="track"></div>
+            <div class="track-active" id="compareTrackActive"></div>
+            <input type="range" id="compareSliderStart" min="0" max="100" value="0" />
+            <input type="range" id="compareSliderEnd" min="0" max="100" value="100" />
+          </div>
+          <div class="slider-ticks" id="compareSliderTicks"></div>
+        </div>
+
+        <div class="compare-selector-section">
+          <span class="compare-selector-label" data-text="compareSelectModels">Select models to compare:</span>
+          <div class="compare-selected-models" id="compareSelectedModels"></div>
+          <div class="compare-add-wrapper" id="compareAddWrapper">
+            <button class="compare-add-btn" id="compareAddBtn" onclick="toggleCompareDropdown()">+ Add model</button>
+            <div class="compare-dropdown" id="compareDropdown">
+              <input class="compare-dropdown-search" id="compareSearch" type="text" placeholder="Search models..." oninput="filterCompareDropdown()" />
+              <div id="compareDropdownList"></div>
+            </div>
+          </div>
+        </div>
+        <div class="compare-chart-container" id="compareChartContainer">
+          <canvas id="radarChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEWS PAGE -->
+    <div id="page-news" class="news-page hidden">
+      <h2 class="leaderboard-title" data-text="newsTitle">Updates</h2>
+      <div class="news-timeline" id="newsContent"></div>
+    </div>
+  </main>
+
+  </div><!-- end page-wrapper -->
+
+  <!-- Lightbox overlay for poster fullscreen -->
+  <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="event.stopPropagation(); closeLightbox()">&times;</span>
+    <img id="lightboxImg" src="" alt="Poster fullscreen" onclick="event.stopPropagation(); cyclePosterZoom(document.getElementById('posterImg'))" />
+  </div>
+
+<script>
+// ============================================================
+// POSTER ZOOM (3 states: normal → medium → fullscreen → normal)
+// ============================================================
+let posterZoomState = 0; // 0=normal, 1=medium, 2=fullscreen
+
+function cyclePosterZoom(imgEl) {
+  const overlay = document.getElementById('lightboxOverlay');
+  const lightboxImg = document.getElementById('lightboxImg');
+  
+  posterZoomState = (posterZoomState + 1) % 3;
+  
+  if (posterZoomState === 0) {
+    // Back to normal
+    overlay.classList.remove('active');
+    overlay.removeAttribute('data-zoom');
+    document.body.style.overflow = '';
+  } else if (posterZoomState === 1) {
+    // Medium zoom - show in lightbox at 70%
+    lightboxImg.src = imgEl.src || imgEl;
+    overlay.classList.add('active');
+    overlay.setAttribute('data-zoom', 'medium');
+    document.body.style.overflow = 'hidden';
+  } else if (posterZoomState === 2) {
+    // Full zoom - 95% of viewport
+    overlay.setAttribute('data-zoom', 'full');
+  }
+}
+
+function closeLightbox() {
+  posterZoomState = 0;
+  const overlay = document.getElementById('lightboxOverlay');
+  overlay.classList.remove('active');
+  overlay.removeAttribute('data-zoom');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeLightbox();
+});
+
+// ============================================================
+// I18N — content loaded from markdown files in content/ folder
+// ============================================================
+let TEXT = {};
+const LANG_FOLDER = { eng: '', ru: 'ru', cn: 'ch', he: 'he' };
+
+// ============================================================
+// MARKDOWN PARSING HELPERS
+// ============================================================
+function parseFrontMatter(text) {
+  const result = { meta: {}, body: '' };
+  const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
+  if (!match) { result.body = text; return result; }
+  match[1].split('\n').forEach(line => {
+    const idx = line.indexOf(':');
+    if (idx === -1) return;
+    const key = line.slice(0, idx).trim();
+    let val = line.slice(idx + 1).trim();
+    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'")))
+      val = val.slice(1, -1);
+    result.meta[key] = val;
+  });
+  result.body = match[2].trim();
+  return result;
+}
+
+function parseMainBody(body) {
+  const lines = body.split('\n').filter(l => l.trim());
+  let title = '', content = '';
+  lines.forEach(line => {
+    if (line.startsWith('# ')) title = line.slice(2).trim();
+    else content += (content ? ' ' : '') + line.trim();
+  });
+  content = content.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+  return { title, content };
+}
+
+function parseUpdates(text) {
+  const entries = [];
+  text.split(/^## /m).filter(b => b.trim()).forEach(block => {
+    const lines = block.split('\n').filter(l => l.trim());
+    if (!lines.length) return;
+    const m = lines[0].match(/^(\d{2}\.\d{2}\.\d{4})\s*[—–\-]\s*(.+)$/);
+    if (!m) return;
+    entries.push({ date: m[1], title: m[2].trim(), body: lines.slice(1).join(' ').trim() });
+  });
+  return entries;
+}
+
+function contentPath(file) {
+  const folder = LANG_FOLDER[lang];
+  return folder ? `./content/${folder}/${file}` : `./content/${file}`;
+}
+
+async function fetchText(path) {
+  try { const r = await fetch(path); return r.ok ? await r.text() : null; }
+  catch { return null; }
+}
+
+async function loadContent() {
+  try {
+    const [mainRes, lbRes, cmpRes, updRes] = await Promise.all([
+      fetchText(contentPath('main.md')),
+      fetchText(contentPath('leaderboard.md')),
+      fetchText(contentPath('compare.md')),
+      fetchText(contentPath('updates.md')),
+    ]);
+
+    // Fallback to English if a file wasn't found
+    const mainText = mainRes ?? await fetchText('./content/main.md');
+    const lbText   = lbRes   ?? await fetchText('./content/leaderboard.md');
+    const cmpText  = cmpRes  ?? await fetchText('./content/compare.md');
+    const updText  = updRes  ?? await fetchText('./content/updates.md');
+
+    const main = parseFrontMatter(mainText || '');
+    const lb   = parseFrontMatter(lbText || '');
+    const cmp  = parseFrontMatter(cmpText || '');
+
+    const mainBody = parseMainBody(main.body);
+
+    TEXT = {
+      header:             main.meta.header          || 'Multi LiveCodeBench',
+      home:               main.meta.navHome          || 'Main',
+      leaderboard:        main.meta.navLeaderboard   || 'Leaderboard',
+      compare:            main.meta.navCompare       || 'Compare',
+      news:               main.meta.navNews          || 'News',
+      newsTitle:          main.meta.newsTitle         || 'Updates',
+      headerBlockFirst:   mainBody.title              || 'Description',
+      textBlockFirst:     mainBody.content            || '',
+      dateRange:          lb.meta.dateRange           || 'Date range',
+      filterLangs:        lb.meta.filterLangs         || 'Filter languages:',
+      notExistedData:     lb.meta.notExistedData      || 'No data for this period',
+      sliderInfo:         lb.meta.sliderInfo          || 'There are {n} tasks in time window: {from} to {to}',
+      model:              lb.meta.model               || 'Model',
+      position:           lb.meta.position            || '№',
+      n:                  lb.meta.n                   || 'n',
+      compareTitle:       cmp.meta.title              || 'Model Comparison',
+      compareSelectModels: cmp.meta.selectModels      || 'Select models to compare:',
+    };
+
+    newsData = parseUpdates(updText || '');
+
+    updateAllTexts();
+    renderNewsForLang();
+    updateSliderInfo();
+    if (!document.getElementById("page-leaderboard").classList.contains("hidden")) renderTable();
+    if (!document.getElementById("page-compare").classList.contains("hidden")) updateCompareSliderInfo();
+  } catch (e) {
+    console.error('Failed to load content:', e);
+  }
+}
+
+// Languages that exist in the data
+const LANGUAGES = ["python","javascript","typescript","java","c++","c#","go","rust","ruby"];
+
+// Short display names for languages
+const LANG_SHORT = {
+  "python": "py", "javascript": "js", "typescript": "ts",
+  "java": "java", "c++": "cpp", "c#": "c#",
+  "go": "go", "rust": "rust", "ruby": "ruby",
+  "kotlin": "kotlin", "php": "php", "scala": "scala"
+};
+
+// Full display names for tooltips
+const LANG_FULL = {
+  "python": "Python", "javascript": "JavaScript", "typescript": "TypeScript",
+  "java": "Java", "c++": "C++", "c#": "C#",
+  "go": "Go", "rust": "Rust", "ruby": "Ruby",
+  "kotlin": "Kotlin", "php": "PHP", "scala": "Scala"
+};
+
+// Logo files mapping
+const LANG_LOGO = {
+  "python": "logo_python.png", "javascript": "logo_js.png", "typescript": "logo_ts.png",
+  "java": "logo_java.png", "c++": "logo_cpp.png", "c#": "logo_cs.png",
+  "go": "logo_go.png", "rust": "logo_rust.png", "ruby": "logo_ruby.png",
+  "kotlin": "logo_kotlin.png", "php": "logo_php.png", "scala": "logo_scala.png"
+};
+
+// All languages for the filter (including those not in data)
+const ALL_FILTER_LANGUAGES = ["python","javascript","typescript","java","c++","c#","go","rust","ruby","kotlin","php","scala"];
+
+// Mapping from JSONL file lang names to pass@1 column names
+const JSONL_LANG_TO_COL = {
+  "python": "pass@1[python]",
+  "javascript": "pass@1[javascript]",
+  "typescript": "pass@1[typescript]",
+  "java": "pass@1[java]",
+  "cpp": "pass@1[c++]",
+  "csharp": "pass@1[c#]",
+  "go": "pass@1[go]",
+  "rust": "pass@1[rust]",
+  "ruby": "pass@1[ruby]",
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let lang = "eng";
+let allData = [];
+let startDate = 0, endDate = 0, dateMin = 0, dateMax = 0;
+let activeLangs = new Set(LANGUAGES);
+let currentSortKey = null, sortDirection = null;
+let originalData = [];
+
+// ============================================================
+// I18N HELPERS
+// ============================================================
+function t(key) { return TEXT[key] || key; }
+
+function setLang(newLang) {
+  lang = newLang;
+  document.querySelectorAll(".lang-toggle button").forEach(btn => btn.classList.remove("active"));
+  const btnMap = { eng: "btnEng", ru: "btnRu", cn: "btnCn", he: "btnHe" };
+  document.getElementById(btnMap[lang])?.classList.add("active");
+  loadContent();
+}
+
+function updateAllTexts() {
+  document.querySelectorAll("[data-text]").forEach(el => {
+    const key = el.getAttribute("data-text");
+    const val = t(key);
+    if (val.includes("<")) el.innerHTML = val; else el.textContent = val;
+  });
+}
+
+// ============================================================
+// ROUTING
+// ============================================================
+function route() {
+  const hash = window.location.hash || "#/";
+  const pages = ["page-description", "page-leaderboard", "page-compare", "page-news"];
+  pages.forEach(id => document.getElementById(id).classList.add("hidden"));
+
+  const introSection = document.getElementById("intro-section");
+
+  // Reset active nav
+  document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active-nav"));
+
+  if (hash === "#/leaderboard") {
+    document.getElementById("page-leaderboard").classList.remove("hidden");
+    introSection.classList.add("hidden");
+    document.getElementById("navLeaderboard").classList.add("active-nav");
+  } else if (hash === "#/compare") {
+    document.getElementById("page-compare").classList.remove("hidden");
+    introSection.classList.add("hidden");
+    document.getElementById("navCompare").classList.add("active-nav");
+    // Initialize compare if data loaded
+    if (allData.length > 0) initCompare();
+  } else if (hash === "#/news") {
+    document.getElementById("page-news").classList.remove("hidden");
+    introSection.classList.add("hidden");
+    document.getElementById("navNews").classList.add("active-nav");
+  } else {
+    document.getElementById("page-description").classList.remove("hidden");
+    introSection.classList.remove("hidden");
+    document.getElementById("navMain").classList.add("active-nav");
+  }
+}
+window.addEventListener("hashchange", route);
+
+// ============================================================
+// NEWS (collapsible, loaded from content/updates.md)
+// ============================================================
+let newsData = [];
+
+function renderNewsForLang() {
+  const container = document.getElementById("newsContent");
+  if (!container) return;
+  container.innerHTML = "";
+
+  newsData.forEach(entry => {
+    const item = document.createElement("div");
+    item.className = "news-item";
+    item.innerHTML = `
+      <div class="news-summary" onclick="toggleNews(this)">
+        <div class="news-summary-left">
+          <span class="news-date">${entry.date}</span>
+          <span class="news-title-text">${entry.title}</span>
+        </div>
+        <span class="news-chevron">▼</span>
+      </div>
+      <div class="news-body">
+        <div class="news-body-text">${entry.body}</div>
+      </div>
+    `;
+    container.appendChild(item);
+  });
+}
+
+function toggleNews(summaryEl) {
+  const item = summaryEl.closest(".news-item");
+  item.classList.toggle("open");
+}
+
+// ============================================================
+// DATA LOADING — new JSONL format: data/{model}/{lang}_{date}.jsonl
+// ============================================================
+function parseJsonl(text) {
+  return text.trim().split('\n').filter(l => l.trim()).map(l => JSON.parse(l));
+}
+
+async function loadAllData() {
+  // 1. Load the index manifest
+  const indexRes = await fetch('./data/index.json');
+  const index = await indexRes.json();
+
+  // 2. For each model, load all language JSONL files in parallel
+  const fetchPromises = [];
+  const fetchMeta = []; // track which model+lang each promise belongs to
+
+  for (const modelEntry of index.models) {
+    for (const [jsonlLang, filename] of Object.entries(modelEntry.files)) {
+      const url = `./data/${encodeURIComponent(modelEntry.name)}/${filename}`;
+      fetchPromises.push(fetch(url).then(r => r.ok ? r.text() : ''));
+      fetchMeta.push({ model: modelEntry.name, jsonlLang });
+    }
+  }
+
+  const results = await Promise.all(fetchPromises);
+
+  // 3. Merge all JSONL data into the flat allData format the rest of the code expects
+  // First, build a lookup: model -> task_id -> { date, task_id, model, pass@1[lang]: val, ... }
+  const modelData = {}; // model -> { "task_id" -> row }
+
+  results.forEach((text, i) => {
+    if (!text) return;
+    const { model, jsonlLang } = fetchMeta[i];
+    const colName = JSONL_LANG_TO_COL[jsonlLang];
+    if (!colName) return;
+
+    if (!modelData[model]) modelData[model] = {};
+
+    const records = parseJsonl(text);
+    for (const rec of records) {
+      const key = `${rec.date}_${rec.task_id}`;
+      if (!modelData[model][key]) {
+        modelData[model][key] = {
+          model,
+          date: rec.date,
+          task_id: rec.task_id,
+        };
+        // Initialize all lang columns to 0
+        for (const col of Object.values(JSONL_LANG_TO_COL)) {
+          modelData[model][key][col] = 0;
+        }
+      }
+      modelData[model][key][colName] = rec.pass;
+    }
+  });
+
+  // 4. Flatten into allData array
+  allData = [];
+  for (const model of Object.keys(modelData)) {
+    for (const row of Object.values(modelData[model])) {
+      allData.push(row);
+    }
+  }
+
+  console.log(`Loaded ${allData.length} rows from ${index.models.length} models`);
+
+  const dates = allData.map(r => new Date(r.date).getTime());
+  dateMin = Math.min(...dates);
+  dateMax = Math.max(...dates);
+  startDate = dateMin;
+  endDate = dateMax;
+
+  setupSliders();
+  setupLangFilter();
+  renderTable();
+}
+
+// ============================================================
+// DUAL RANGE SLIDER (index-based, snaps to unique dates)
+// ============================================================
+let uniqueDates = [];
+
+function setupSliders() {
+  const dateSet = new Set(allData.map(r => new Date(r.date).getTime()));
+  uniqueDates = [...dateSet].sort((a, b) => a - b);
+
+  const maxIdx = uniqueDates.length - 1;
+  const sS = document.getElementById("sliderStart");
+  const sE = document.getElementById("sliderEnd");
+
+  [sS, sE].forEach(s => { s.min = 0; s.max = maxIdx; s.step = 1; });
+  sS.value = 0;
+  sE.value = maxIdx;
+
+  const update = () => {
+    let si = Number(sS.value), ei = Number(sE.value);
+    if (si > ei) { [si, ei] = [ei, si]; sS.value = si; sE.value = ei; }
+    startDate = uniqueDates[si];
+    endDate = uniqueDates[ei];
+    document.getElementById("startDateLabel").textContent = fmtDate(startDate);
+    document.getElementById("endDateLabel").textContent = fmtDate(endDate);
+    updateTrack(si, ei, maxIdx);
+    updateSliderInfo();
+    currentSortKey = null; sortDirection = null;
+    renderTable();
+  };
+
+  sS.addEventListener("input", update);
+  sE.addEventListener("input", update);
+
+  renderTicks(uniqueDates);
+  update();
+}
+
+function updateSliderInfo() {
+  const filtered = filterByDate(allData);
+  const uniqueTasks = new Set(filtered.map(r => r.task_id));
+  const nTasks = uniqueTasks.size;
+  const infoEl = document.getElementById("sliderInfo");
+  if (!infoEl) return;
+  const template = t("sliderInfo");
+  infoEl.textContent = template
+    .replace("{n}", nTasks)
+    .replace("{from}", fmtDate(startDate))
+    .replace("{to}", fmtDate(endDate));
+}
+
+function updateTrack(si, ei, maxIdx) {
+  const pct1 = maxIdx > 0 ? (si / maxIdx) * 100 : 0;
+  const pct2 = maxIdx > 0 ? (ei / maxIdx) * 100 : 100;
+  const track = document.getElementById("trackActive");
+  track.style.left = pct1 + "%";
+  track.style.width = (pct2 - pct1) + "%";
+}
+
+function renderTicks(dates) {
+  const container = document.getElementById("sliderTicks");
+  container.innerHTML = "";
+  const n = 5;
+  const len = dates.length;
+  if (len === 0) return;
+  for (let i = 0; i < n; i++) {
+    const idx = Math.round((i / (n - 1)) * (len - 1));
+    const span = document.createElement("span");
+    span.className = "slider-tick";
+    span.textContent = fmtDate(dates[idx]);
+    container.appendChild(span);
+  }
+}
+
+function fmtDate(ts) {
+  const d = new Date(ts);
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  return `${dd}/${mm}/${d.getFullYear()}`;
+}
+
+// ============================================================
+// LANGUAGE FILTER (with logos, including all languages)
+// ============================================================
+function setupLangFilter() {
+  const container = document.getElementById("langFilter");
+
+  ALL_FILTER_LANGUAGES.forEach(l => {
+    const isInData = LANGUAGES.includes(l);
+    const chip = document.createElement("div");
+    chip.className = "lang-chip";
+
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = isInData;
+    cb.id = `cb-${l}`;
+    if (!isInData) cb.disabled = true;
+
+    cb.addEventListener("change", () => {
+      if (cb.checked) activeLangs.add(l); else activeLangs.delete(l);
+      currentSortKey = null; sortDirection = null; renderTable();
+    });
+
+    const logoImg = document.createElement("img");
+    logoImg.className = "lang-logo";
+    logoImg.src = `./logos/${LANG_LOGO[l]}`;
+    logoImg.alt = LANG_FULL[l];
+
+    const lbl = document.createElement("label");
+    lbl.htmlFor = `cb-${l}`;
+    lbl.textContent = LANG_SHORT[l];
+
+    chip.append(cb, logoImg, lbl);
+    container.appendChild(chip);
+  });
+}
+
+// ============================================================
+// DATA PROCESSING
+// ============================================================
+function filterByDate(data) {
+  return data.filter(r => { const t = new Date(r.date).getTime(); return t >= startDate && t <= endDate; });
+}
+function mean(arr) { return arr.length === 0 ? 0 : arr.reduce((a, b) => a + b, 0) / arr.length; }
+
+function summarize(data) {
+  const grouped = {};
+  data.forEach(row => { (grouped[row.model] ||= []).push(row); });
+
+  const summary = Object.entries(grouped).map(([model, rows]) => {
+    const result = { model, n_task: rows.length };
+    let avgSum = 0, avgCount = 0;
+    LANGUAGES.forEach(l => {
+      const key = `pass@1[${l}]`;
+      const val = mean(rows.map(r => r[key] ?? 0)) * 100;
+      result[key] = val;
+      if (activeLangs.has(l)) { avgSum += val; avgCount++; }
+    });
+    result["pass@1[avg]"] = avgCount > 0 ? avgSum / avgCount : 0;
+    return result;
+  });
+
+  summary.sort((a, b) => b["pass@1[avg]"] - a["pass@1[avg]"]);
+  summary.forEach((r, i) => { r.modelIdx = i + 1; });
+  return summary;
+}
+
+// ============================================================
+// TABLE
+// ============================================================
+function renderTable() {
+  const summary = summarize(filterByDate(allData));
+  originalData = [...summary];
+  let data = [...summary];
+
+  if (currentSortKey && sortDirection) {
+    data.sort((a, b) => {
+      const av = a[currentSortKey], bv = b[currentSortKey];
+      if (av < bv) return sortDirection === "asc" ? -1 : 1;
+      if (av > bv) return sortDirection === "asc" ? 1 : -1;
+      return 0;
+    });
+  }
+
+  const aLangs = LANGUAGES.filter(l => activeLangs.has(l));
+  const noData = document.getElementById("noData");
+  const table = document.getElementById("leaderTable");
+
+  if (!data.length) { noData.classList.remove("hidden"); table.classList.add("hidden"); return; }
+  noData.classList.add("hidden"); table.classList.remove("hidden");
+
+  // HEAD
+  const thead = document.getElementById("tableHead");
+  thead.innerHTML = "";
+  const hr = document.createElement("tr");
+
+  const addTh = (text, key, sortable = true, tooltip = "") => {
+    const th = document.createElement("th");
+    if (tooltip) th.title = tooltip;
+    if (!sortable) { th.textContent = text; th.style.cursor = "default"; }
+    else { th.innerHTML = text + " " + sortIcon(key); th.onclick = () => handleSort(key); }
+    hr.appendChild(th);
+  };
+
+  addTh(t("position"), null, false);
+  addTh(t("model"), "model");
+  addTh("avg", "pass@1[avg]", true, "pass@1 average across selected languages");
+  aLangs.forEach(l => addTh(LANG_SHORT[l], `pass@1[${l}]`, true, `pass@1 for ${LANG_FULL[l]}`));
+  addTh("n", "n_task");
+  thead.appendChild(hr);
+
+  // BODY
+  const tbody = document.getElementById("tableBody");
+  tbody.innerHTML = "";
+  data.forEach(row => {
+    const tr = document.createElement("tr");
+    // rank
+    const tdR = document.createElement("td"); tdR.style.textAlign = "center";
+    const b = document.createElement("span"); b.className = rankClass(row.modelIdx); b.textContent = row.modelIdx;
+    tdR.appendChild(b); tr.appendChild(tdR);
+    // model
+    const tdM = document.createElement("td"); tdM.className = "model-name"; tdM.textContent = row.model; tr.appendChild(tdM);
+    // avg
+    const tdA = document.createElement("td"); tdA.textContent = row["pass@1[avg]"].toFixed(1);
+    tdA.style.fontWeight = "700"; tdA.style.color = "#a5b4fc"; tr.appendChild(tdA);
+    // per lang
+    aLangs.forEach(l => {
+      const td = document.createElement("td"); td.textContent = row[`pass@1[${l}]`].toFixed(1); tr.appendChild(td);
+    });
+    // tasks (n)
+    const tdT = document.createElement("td"); tdT.textContent = row.n_task; tr.appendChild(tdT);
+    tbody.appendChild(tr);
+  });
+}
+
+function sortIcon(key) {
+  if (currentSortKey !== key) return '<span class="sort-icon">↕</span>';
+  if (sortDirection === "asc") return '<span class="sort-icon active">↑</span>';
+  if (sortDirection === "desc") return '<span class="sort-icon active">↓</span>';
+  return '<span class="sort-icon">↕</span>';
+}
+
+function handleSort(key) {
+  if (currentSortKey === key) {
+    if (sortDirection === "asc") sortDirection = "desc";
+    else if (sortDirection === "desc") { sortDirection = null; currentSortKey = null; }
+    else sortDirection = "asc";
+  } else { currentSortKey = key; sortDirection = "asc"; }
+  renderTable();
+}
+
+function rankClass(i) {
+  if (i === 1) return "rank-badge rank-1";
+  if (i === 2) return "rank-badge rank-2";
+  if (i === 3) return "rank-badge rank-3";
+  return "rank-badge rank-other";
+}
+
+// ============================================================
+// COMPARE — Radar/Spider Chart with Model Selector & Date Slider
+// ============================================================
+const COMPARE_COLORS = [
+  { bg: 'rgba(129, 140, 248, 0.2)', border: '#818cf8', chip: 'rgba(99, 102, 241, 0.25)' },
+  { bg: 'rgba(52, 211, 153, 0.2)',  border: '#34d399', chip: 'rgba(16, 185, 129, 0.25)' },
+  { bg: 'rgba(251, 146, 60, 0.2)',  border: '#fb923c', chip: 'rgba(249, 115, 22, 0.25)' },
+  { bg: 'rgba(244, 114, 182, 0.2)', border: '#f472b6', chip: 'rgba(236, 72, 153, 0.25)' },
+  { bg: 'rgba(250, 204, 21, 0.2)',  border: '#facc15', chip: 'rgba(234, 179, 8, 0.25)' },
+  { bg: 'rgba(56, 189, 248, 0.2)',  border: '#38bdf8', chip: 'rgba(14, 165, 233, 0.25)' },
+  { bg: 'rgba(192, 132, 252, 0.2)', border: '#c084fc', chip: 'rgba(168, 85, 247, 0.25)' },
+  { bg: 'rgba(248, 113, 113, 0.2)', border: '#f87171', chip: 'rgba(239, 68, 68, 0.25)' },
+  { bg: 'rgba(163, 230, 53, 0.2)',  border: '#a3e635', chip: 'rgba(132, 204, 22, 0.25)' },
+  { bg: 'rgba(253, 186, 116, 0.2)', border: '#fdba74', chip: 'rgba(251, 146, 60, 0.25)' },
+];
+
+let compareSelectedModels = [];
+let compareChart = null;
+let compareInitialized = false;
+let compareStartDate = 0, compareEndDate = 0;
+let compareSliderSetup = false;
+
+function getCompareSummary() {
+  const filtered = allData.filter(r => {
+    const t = new Date(r.date).getTime();
+    return t >= compareStartDate && t <= compareEndDate;
+  });
+  return summarize(filtered);
+}
+
+function initCompare() {
+  if (!compareSliderSetup) {
+    setupCompareSliders();
+    compareSliderSetup = true;
+  }
+  if (!compareInitialized) {
+    const summary = getCompareSummary();
+    if (summary.length > 0) {
+      compareSelectedModels = summary.slice(0, 5).map(r => r.model);
+      compareInitialized = true;
+    }
+  }
+  renderCompareChips();
+  renderRadarChart();
+}
+
+function setupCompareSliders() {
+  const maxIdx = uniqueDates.length - 1;
+  if (maxIdx < 0) return;
+
+  compareStartDate = uniqueDates[0];
+  compareEndDate = uniqueDates[maxIdx];
+
+  const sS = document.getElementById("compareSliderStart");
+  const sE = document.getElementById("compareSliderEnd");
+  [sS, sE].forEach(s => { s.min = 0; s.max = maxIdx; s.step = 1; });
+  sS.value = 0;
+  sE.value = maxIdx;
+
+  const update = () => {
+    let si = Number(sS.value), ei = Number(sE.value);
+    if (si > ei) { [si, ei] = [ei, si]; sS.value = si; sE.value = ei; }
+    compareStartDate = uniqueDates[si];
+    compareEndDate = uniqueDates[ei];
+    document.getElementById("compareStartDateLabel").textContent = fmtDate(compareStartDate);
+    document.getElementById("compareEndDateLabel").textContent = fmtDate(compareEndDate);
+    // Update track
+    const pct1 = maxIdx > 0 ? (si / maxIdx) * 100 : 0;
+    const pct2 = maxIdx > 0 ? (ei / maxIdx) * 100 : 100;
+    const track = document.getElementById("compareTrackActive");
+    track.style.left = pct1 + "%";
+    track.style.width = (pct2 - pct1) + "%";
+    // Update slider info
+    updateCompareSliderInfo();
+    // Re-render chart
+    renderCompareChips();
+    renderRadarChart();
+  };
+
+  sS.addEventListener("input", update);
+  sE.addEventListener("input", update);
+
+  // Render ticks
+  const container = document.getElementById("compareSliderTicks");
+  container.innerHTML = "";
+  const n = 5;
+  for (let i = 0; i < n; i++) {
+    const idx = Math.round((i / (n - 1)) * (uniqueDates.length - 1));
+    const span = document.createElement("span");
+    span.className = "slider-tick";
+    span.textContent = fmtDate(uniqueDates[idx]);
+    container.appendChild(span);
+  }
+
+  update();
+}
+
+function updateCompareSliderInfo() {
+  const filtered = allData.filter(r => {
+    const t = new Date(r.date).getTime();
+    return t >= compareStartDate && t <= compareEndDate;
+  });
+  const uniqueTasks = new Set(filtered.map(r => r.task_id));
+  const infoEl = document.getElementById("compareSliderInfo");
+  if (!infoEl) return;
+  const template = t("sliderInfo");
+  infoEl.textContent = template
+    .replace("{n}", uniqueTasks.size)
+    .replace("{from}", fmtDate(compareStartDate))
+    .replace("{to}", fmtDate(compareEndDate));
+}
+
+function renderCompareChips() {
+  const container = document.getElementById('compareSelectedModels');
+  container.innerHTML = '';
+  const summary = getCompareSummary();
+  compareSelectedModels.forEach((model, idx) => {
+    const color = COMPARE_COLORS[idx % COMPARE_COLORS.length];
+    const chip = document.createElement('div');
+    chip.className = 'compare-model-chip';
+    chip.style.background = color.chip;
+    chip.style.borderColor = color.border;
+    const row = summary.find(r => r.model === model);
+    const avgText = row ? ` (${row["pass@1[avg]"].toFixed(1)}%)` : '';
+    chip.innerHTML = `
+      <span class="chip-dot" style="background:${color.border}"></span>
+      <span>${model}${avgText}</span>
+      <button class="chip-remove" onclick="removeCompareModel(${idx})" title="Remove">×</button>
+    `;
+    container.appendChild(chip);
+  });
+  const addBtn = document.getElementById('compareAddBtn');
+  addBtn.disabled = false;
+  addBtn.textContent = '+ Add model';
+}
+
+function removeCompareModel(idx) {
+  compareSelectedModels.splice(idx, 1);
+  renderCompareChips();
+  renderRadarChart();
+}
+
+function toggleCompareDropdown() {
+  const dd = document.getElementById('compareDropdown');
+  dd.classList.toggle('open');
+  if (dd.classList.contains('open')) {
+    document.getElementById('compareSearch').value = '';
+    filterCompareDropdown();
+    setTimeout(() => document.getElementById('compareSearch').focus(), 50);
+  }
+}
+
+function filterCompareDropdown() {
+  const query = document.getElementById('compareSearch').value.toLowerCase();
+  const list = document.getElementById('compareDropdownList');
+  list.innerHTML = '';
+  const summary = getCompareSummary();
+  const filtered = summary.filter(r =>
+    !compareSelectedModels.includes(r.model) &&
+    r.model.toLowerCase().includes(query)
+  );
+  filtered.forEach(row => {
+    const item = document.createElement('div');
+    item.className = 'compare-dropdown-item';
+    item.innerHTML = `<span>${row.model}</span><span class="dd-avg">${row["pass@1[avg]"].toFixed(1)}%</span>`;
+    item.onclick = () => selectCompareModel(row.model);
+    list.appendChild(item);
+  });
+  if (filtered.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'compare-dropdown-item';
+    empty.style.color = '#64748b';
+    empty.style.cursor = 'default';
+    empty.textContent = 'No models found';
+    list.appendChild(empty);
+  }
+}
+
+function selectCompareModel(model) {
+  if (compareSelectedModels.includes(model)) return;
+  compareSelectedModels.push(model);
+  document.getElementById('compareDropdown').classList.remove('open');
+  renderCompareChips();
+  renderRadarChart();
+}
+
+document.addEventListener('click', (e) => {
+  const wrapper = document.getElementById('compareAddWrapper');
+  if (wrapper && !wrapper.contains(e.target)) {
+    document.getElementById('compareDropdown')?.classList.remove('open');
+  }
+});
+
+function renderRadarChart() {
+  const summary = getCompareSummary();
+  const labels = LANGUAGES.map(l => LANG_FULL[l]);
+  
+  const datasets = compareSelectedModels.map((modelName, idx) => {
+    const row = summary.find(r => r.model === modelName);
+    const color = COMPARE_COLORS[idx % COMPARE_COLORS.length];
+    const data = LANGUAGES.map(l => row ? row[`pass@1[${l}]`] : 0);
+    return {
+      label: modelName,
+      data,
+      backgroundColor: color.bg,
+      borderColor: color.border,
+      borderWidth: 2.5,
+      pointBackgroundColor: color.border,
+      pointBorderColor: '#1e293b',
+      pointBorderWidth: 2,
+      pointRadius: 4,
+      pointHoverRadius: 7,
+    };
+  });
+
+  const ctx = document.getElementById('radarChart');
+  
+  if (compareChart) {
+    compareChart.data.labels = labels;
+    compareChart.data.datasets = datasets;
+    compareChart.update('none');
+    return;
+  }
+
+  compareChart = new Chart(ctx, {
+    type: 'radar',
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      animation: { duration: 600, easing: 'easeOutQuart' },
+      scales: {
+        r: {
+          beginAtZero: true, max: 100, min: 0,
+          ticks: { stepSize: 20, color: '#64748b', backdropColor: 'transparent', font: { family: "'JetBrains Mono', monospace", size: 11 } },
+          grid: { color: 'rgba(71, 85, 105, 0.4)', lineWidth: 1 },
+          angleLines: { color: 'rgba(71, 85, 105, 0.3)', lineWidth: 1 },
+          pointLabels: { color: '#cbd5e1', font: { family: "'Inter', sans-serif", size: 13, weight: '600' }, padding: 16 }
+        }
+      },
+      plugins: {
+        legend: { display: true, position: 'bottom', labels: { color: '#cbd5e1', padding: 20, usePointStyle: true, pointStyle: 'circle', font: { family: "'Inter', sans-serif", size: 12, weight: '500' } } },
+        tooltip: {
+          backgroundColor: 'rgba(15, 23, 42, 0.95)', titleColor: '#f1f5f9', bodyColor: '#cbd5e1',
+          borderColor: '#475569', borderWidth: 1, cornerRadius: 8, padding: 12,
+          titleFont: { family: "'Inter', sans-serif", size: 13, weight: '600' },
+          bodyFont: { family: "'JetBrains Mono', monospace", size: 12 },
+          callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}%` }
+        }
+      }
+    }
+  });
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener("DOMContentLoaded", () => {
+  route();
+  loadContent();
+  loadAllData().catch(err => console.error("Failed to load data:", err));
+});
+</script>
+</body>
+</html>
