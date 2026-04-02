@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -442,6 +443,48 @@
     td.model-name {
       font-family: 'Inter', sans-serif;
       font-weight: 600; color: #f1f5f9; white-space: nowrap;
+      position: relative;
+      cursor: help;
+    }
+    
+    /* Tooltip for meta.json hyperparameters */
+    .model-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      margin-bottom: 8px;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid #475569;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #cbd5e1;
+      white-space: nowrap;
+      z-index: 1000;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    td.model-name:hover .model-tooltip {
+      opacity: 1;
+    }
+    .model-tooltip-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .model-tooltip-row:last-child {
+      margin-bottom: 0;
+    }
+    .model-tooltip-key {
+      color: #a5b4fc;
+      font-weight: 600;
+    }
+    .model-tooltip-value {
+      color: #e2e8f0;
     }
 
     /* ===== RANK BADGES ===== */
@@ -659,6 +702,23 @@
             <input type="range" id="sliderEnd" min="0" max="100" value="100" />
           </div>
           <div class="slider-ticks" id="sliderTicks"></div>
+        </div>
+
+        <!-- Difficulty filter -->
+        <div class="lang-filter" id="diffFilter" style="margin-bottom: 16px;">
+          <span class="lang-filter-title">Filter by difficulty:</span>
+          <div class="lang-chip">
+            <input type="checkbox" id="cb-diff-E" checked />
+            <label for="cb-diff-E" style="font-size: 13px; color: #34d399;">Easy</label>
+          </div>
+          <div class="lang-chip">
+            <input type="checkbox" id="cb-diff-M" checked />
+            <label for="cb-diff-M" style="font-size: 13px; color: #fb923c;">Medium</label>
+          </div>
+          <div class="lang-chip">
+            <input type="checkbox" id="cb-diff-H" checked />
+            <label for="cb-diff-H" style="font-size: 13px; color: #f87171;">Hard</label>
+          </div>
         </div>
 
         <!-- Language filter -->
@@ -885,8 +945,8 @@ async function loadContent() {
   }
 }
 
-// Languages that exist in the data
-const LANGUAGES = ["python","javascript","typescript","java","c++","c#","go","rust","ruby"];
+// Languages that exist in the data (php, kotlin, scala at the end)
+const LANGUAGES = ["python","javascript","typescript","java","c++","c#","go","rust","ruby","php","kotlin","scala"];
 
 // Short display names for languages
 const LANG_SHORT = {
@@ -912,8 +972,8 @@ const LANG_LOGO = {
   "kotlin": "logo_kotlin.png", "php": "logo_php.png", "scala": "logo_scala.png"
 };
 
-// All languages for the filter (including those not in data)
-const ALL_FILTER_LANGUAGES = ["python","javascript","typescript","java","c++","c#","go","rust","ruby","kotlin","php","scala"];
+// All languages for the filter (including those not in data) - php, kotlin, scala at the end
+const ALL_FILTER_LANGUAGES = ["python","javascript","typescript","java","c++","c#","go","rust","ruby","php","kotlin","scala"];
 
 // Mapping from JSONL file lang names to pass@1 column names
 const JSONL_LANG_TO_COL = {
@@ -926,6 +986,9 @@ const JSONL_LANG_TO_COL = {
   "go": "pass@1[go]",
   "rust": "pass@1[rust]",
   "ruby": "pass@1[ruby]",
+  "kotlin": "pass@1[kotlin]",
+  "php": "pass@1[php]",
+  "scala": "pass@1[scala]",
 };
 
 // ============================================================
@@ -935,8 +998,11 @@ let lang = "eng";
 let allData = [];
 let startDate = 0, endDate = 0, dateMin = 0, dateMax = 0;
 let activeLangs = new Set(LANGUAGES);
+let activeDifficulties = new Set(['E', 'M', 'H']); // Difficulty filter
 let currentSortKey = null, sortDirection = null;
 let originalData = [];
+let modelMeta = {}; // Store meta.json for each model
+let taskDifficulties = {}; // Store difficulty for each task_id
 
 // ============================================================
 // I18N HELPERS
@@ -1040,7 +1106,20 @@ async function loadAllData() {
   const indexRes = await fetch('./data/index.json');
   const index = await indexRes.json();
 
-  // 2. For each model, load all language JSONL files in parallel
+  // 2. Load meta.json for each model
+  const metaPromises = index.models.map(modelEntry => {
+    const url = `./data/${encodeURIComponent(modelEntry.name)}/meta.json`;
+    return fetch(url)
+      .then(r => r.ok ? r.json() : null)
+      .then(meta => ({ model: modelEntry.name, meta }))
+      .catch(() => ({ model: modelEntry.name, meta: null }));
+  });
+  const metaResults = await Promise.all(metaPromises);
+  metaResults.forEach(({ model, meta }) => {
+    if (meta) modelMeta[model] = meta;
+  });
+
+  // 3. For each model, load all language JSONL files in parallel
   const fetchPromises = [];
   const fetchMeta = []; // track which model+lang each promise belongs to
 
@@ -1081,6 +1160,10 @@ async function loadAllData() {
         }
       }
       modelData[model][key][colName] = rec.pass;
+      // Store difficulty if available
+      if (rec.difficulty && !taskDifficulties[rec.task_id]) {
+        taskDifficulties[rec.task_id] = rec.difficulty;
+      }
     }
   });
 
@@ -1102,6 +1185,7 @@ async function loadAllData() {
 
   setupSliders();
   setupLangFilter();
+  setupDifficultyFilter();
   renderTable();
 }
 
@@ -1145,14 +1229,13 @@ function setupSliders() {
 function updateSliderInfo() {
   const filtered = filterByDate(allData);
   const uniqueTasks = new Set(filtered.map(r => r.task_id));
+  const uniqueModels = new Set(filtered.map(r => r.model));
   const nTasks = uniqueTasks.size;
+  const nModels = uniqueModels.size;
+  const nLangs = activeLangs.size;
   const infoEl = document.getElementById("sliderInfo");
   if (!infoEl) return;
-  const template = t("sliderInfo");
-  infoEl.textContent = template
-    .replace("{n}", nTasks)
-    .replace("{from}", fmtDate(startDate))
-    .replace("{to}", fmtDate(endDate));
+  infoEl.textContent = `There are ${nTasks} tasks from ${fmtDate(startDate)} to ${fmtDate(endDate)} (${nModels} models, ${nLangs} languages)`;
 }
 
 function updateTrack(si, ei, maxIdx) {
@@ -1222,10 +1305,34 @@ function setupLangFilter() {
 }
 
 // ============================================================
+// DIFFICULTY FILTER SETUP
+// ============================================================
+function setupDifficultyFilter() {
+  ['E', 'M', 'H'].forEach(diff => {
+    const cb = document.getElementById(`cb-diff-${diff}`);
+    if (!cb) return;
+    cb.addEventListener("change", () => {
+      if (cb.checked) activeDifficulties.add(diff);
+      else activeDifficulties.delete(diff);
+      currentSortKey = null; sortDirection = null;
+      renderTable();
+      updateSliderInfo();
+    });
+  });
+}
+
+// ============================================================
 // DATA PROCESSING
 // ============================================================
 function filterByDate(data) {
-  return data.filter(r => { const t = new Date(r.date).getTime(); return t >= startDate && t <= endDate; });
+  return data.filter(r => {
+    const t = new Date(r.date).getTime();
+    if (t < startDate || t > endDate) return false;
+    // Filter by difficulty if available
+    const difficulty = taskDifficulties[r.task_id];
+    if (difficulty && !activeDifficulties.has(difficulty)) return false;
+    return true;
+  });
 }
 function mean(arr) { return arr.length === 0 ? 0 : arr.reduce((a, b) => a + b, 0) / arr.length; }
 
@@ -1295,28 +1402,83 @@ function renderTable() {
   addTh("n", "n_task");
   thead.appendChild(hr);
 
+  // Calculate max tasks to determine which models have subsets
+  const maxTasks = Math.max(...data.map(r => r.n_task));
+  
+  // Count how many languages each model has (non-zero values)
+  const modelLangCounts = {};
+  data.forEach(row => {
+    let langCount = 0;
+    LANGUAGES.forEach(l => {
+      const key = `pass@1[${l}]`;
+      if (row[key] > 0) langCount++;
+    });
+    modelLangCounts[row.model] = langCount;
+  });
+  
   // BODY
   const tbody = document.getElementById("tableBody");
   tbody.innerHTML = "";
+  const needsTaskFootnote = data.some(r => r.n_task < maxTasks);
+  const needsLangFootnote = data.some(r => modelLangCounts[r.model] < 12);
+  
   data.forEach(row => {
     const tr = document.createElement("tr");
     // rank
     const tdR = document.createElement("td"); tdR.style.textAlign = "center";
     const b = document.createElement("span"); b.className = rankClass(row.modelIdx); b.textContent = row.modelIdx;
     tdR.appendChild(b); tr.appendChild(tdR);
-    // model
-    const tdM = document.createElement("td"); tdM.className = "model-name"; tdM.textContent = row.model; tr.appendChild(tdM);
+    // model - add markers and tooltip if needed
+    const tdM = document.createElement("td"); tdM.className = "model-name";
+    let modelText = row.model;
+    if (row.n_task < maxTasks) modelText += ' *';
+    if (modelLangCounts[row.model] < 12) modelText += ' ✝';
+    tdM.textContent = modelText;
+    
+    // Add tooltip with hyperparameters if meta.json exists
+    if (modelMeta[row.model]) {
+      const tooltip = document.createElement("div");
+      tooltip.className = "model-tooltip";
+      const meta = modelMeta[row.model];
+      tooltip.innerHTML = Object.entries(meta).map(([key, val]) => 
+        `<div class="model-tooltip-row"><span class="model-tooltip-key">${key}:</span><span class="model-tooltip-value">${val}</span></div>`
+      ).join('');
+      tdM.appendChild(tooltip);
+    }
+    
+    tr.appendChild(tdM);
     // avg
     const tdA = document.createElement("td"); tdA.textContent = row["pass@1[avg]"].toFixed(1);
     tdA.style.fontWeight = "700"; tdA.style.color = "#a5b4fc"; tr.appendChild(tdA);
     // per lang
     aLangs.forEach(l => {
-      const td = document.createElement("td"); td.textContent = row[`pass@1[${l}]`].toFixed(1); tr.appendChild(td);
+      const td = document.createElement("td");
+      const val = row[`pass@1[${l}]`];
+      td.textContent = val > 0 ? val.toFixed(1) : '—';
+      if (val === 0) td.style.color = '#64748b';
+      tr.appendChild(td);
     });
     // tasks (n)
     const tdT = document.createElement("td"); tdT.textContent = row.n_task; tr.appendChild(tdT);
     tbody.appendChild(tr);
   });
+  
+  // Add footnotes if needed
+  if (needsTaskFootnote || needsLangFootnote) {
+    const trFootnote = document.createElement("tr");
+    const tdFootnote = document.createElement("td");
+    tdFootnote.colSpan = 3 + aLangs.length + 1;
+    tdFootnote.style.fontSize = "11px";
+    tdFootnote.style.color = "#94a3b8";
+    tdFootnote.style.paddingTop = "16px";
+    tdFootnote.style.fontStyle = "italic";
+    let footnoteText = "";
+    if (needsTaskFootnote) footnoteText += "* Model was evaluated on a subset of tasks. ";
+    if (needsLangFootnote) footnoteText += "✝ Model was evaluated on a subset of languages.";
+    tdFootnote.textContent = footnoteText;
+    trFootnote.appendChild(tdFootnote);
+    tbody.appendChild(trFootnote);
+  }
 }
 
 function sortIcon(key) {

@@ -1,283 +1,924 @@
 {
   "models": [
     {
-      "name": "DeepSeek-R1-0528_cot",
+      "name": "DeepSeek-R1-0528",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "python": "python.jsonl",
+        "csharp": "csharp.jsonl",
+        "typescript": "typescript.jsonl",
+        "go": "go.jsonl",
+        "rust": "rust.jsonl",
+        "cpp": "cpp.jsonl",
+        "java": "java.jsonl",
+        "javascript": "javascript.jsonl",
+        "ruby": "ruby.jsonl"
       }
     },
     {
-      "name": "Devstral-Small-2505",
+      "name": "DeepSeek-R1-0528-Qwen3-8B_cot",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "go": "go_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "DeepSeek-R1-Distill-Qwen-14B_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "DeepSeek-R1-Distill-Qwen-32B_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "DeepSeek-R1_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl"
+      }
+    },
+    {
+      "name": "DeepSeek-V3-0324_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "Devstral-Small-2505_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
       }
     },
     {
       "name": "OlympicCoder-32B_cot",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
       }
     },
     {
       "name": "OlympicCoder-7B_cot",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
       }
     },
     {
       "name": "OpenCodeReasoning-Nemotron-1.1-32B_cot",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "OpenCoder-8B-Instruct",
+      "files": {
+        "python": "python.jsonl",
+        "php": "php.jsonl",
+        "kotlin": "kotlin.jsonl",
+        "csharp": "csharp.jsonl",
+        "typescript": "typescript.jsonl",
+        "go": "go.jsonl",
+        "rust": "rust.jsonl",
+        "cpp": "cpp.jsonl",
+        "java": "java.jsonl",
+        "scala": "scala.jsonl",
+        "javascript": "javascript.jsonl",
+        "ruby": "ruby.jsonl"
       }
     },
     {
       "name": "OpenReasoning-Nemotron-32B_cot",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
       }
     },
     {
       "name": "Qwen2.5-Coder-14B-Instruct",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "python": "python.jsonl",
+        "php": "php.jsonl",
+        "kotlin": "kotlin.jsonl",
+        "csharp": "csharp.jsonl",
+        "typescript": "typescript.jsonl",
+        "go": "go.jsonl",
+        "rust": "rust.jsonl",
+        "cpp": "cpp.jsonl",
+        "java": "java.jsonl",
+        "scala": "scala.jsonl",
+        "javascript": "javascript.jsonl",
+        "ruby": "ruby.jsonl"
       }
     },
     {
       "name": "Qwen2.5-Coder-32B-Instruct",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "python": "python.jsonl",
+        "php": "php.jsonl",
+        "kotlin": "kotlin.jsonl",
+        "csharp": "csharp.jsonl",
+        "typescript": "typescript.jsonl",
+        "go": "go.jsonl",
+        "rust": "rust.jsonl",
+        "cpp": "cpp.jsonl",
+        "java": "java.jsonl",
+        "scala": "scala.jsonl",
+        "javascript": "javascript.jsonl",
+        "ruby": "ruby.jsonl"
       }
     },
     {
       "name": "Qwen3-14B_cot",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
       }
     },
     {
-      "name": "Qwen3-235B-A22B-Instruct-2507",
+      "name": "Qwen3-235B-A22B-Instruct-2507_cot",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
-      }
-    },
-    {
-      "name": "Qwen3-235B-A22B-Thinking-2507_cot",
-      "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
       }
     },
     {
       "name": "Qwen3-235B-A22B_cot",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
       }
     },
     {
-      "name": "Qwen3-30B-A3B-Instruct-2507",
+      "name": "Qwen3-30B-A3B-Instruct-2507_cot",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
-      }
-    },
-    {
-      "name": "Qwen3-30B-A3B-Thinking-2507_cot",
-      "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
       }
     },
     {
       "name": "Qwen3-30B-A3B_cot",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
       }
     },
     {
       "name": "Qwen3-32B_cot",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
       }
     },
     {
       "name": "Qwen3-8B_cot",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
       }
     },
     {
       "name": "Qwen3-Coder-30B-A3B-Instruct",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "python": "python.jsonl",
+        "php": "php.jsonl",
+        "kotlin": "kotlin.jsonl",
+        "csharp": "csharp.jsonl",
+        "typescript": "typescript.jsonl",
+        "go": "go.jsonl",
+        "rust": "rust.jsonl",
+        "cpp": "cpp.jsonl",
+        "java": "java.jsonl",
+        "scala": "scala.jsonl",
+        "javascript": "javascript.jsonl",
+        "ruby": "ruby.jsonl"
       }
     },
     {
       "name": "Seed-Coder-8B-Instruct",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
+        "python": "python.jsonl",
+        "php": "php.jsonl",
+        "kotlin": "kotlin.jsonl",
+        "csharp": "csharp.jsonl",
+        "typescript": "typescript.jsonl",
+        "go": "go.jsonl",
+        "rust": "rust.jsonl",
+        "cpp": "cpp.jsonl",
+        "java": "java.jsonl",
+        "scala": "scala.jsonl",
+        "javascript": "javascript.jsonl",
+        "ruby": "ruby.jsonl"
+      }
+    },
+    {
+      "name": "_old_DeepSeek-R1-0528-Qwen3-8B",
+      "files": {
+        "typescript": "typescript.jsonl"
+      }
+    },
+    {
+      "name": "_old_DeepSeek-R1-0528_cot",
+      "files": {
         "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
         "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_Devstral-Small-2505",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_OlympicCoder-32B_cot",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_OlympicCoder-7B_cot",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_OpenCodeReasoning-Nemotron-1.1-32B_cot",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_OpenReasoning-Nemotron-32B_cot",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_Qwen2.5-Coder-14B-Instruct",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_Qwen2.5-Coder-32B-Instruct",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_Qwen3-14B_cot",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_Qwen3-235B-A22B-Instruct-2507",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_Qwen3-235B-A22B-Thinking-2507_cot",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_Qwen3-235B-A22B_cot",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_Qwen3-30B-A3B-Instruct-2507",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_Qwen3-30B-A3B-Thinking-2507_cot",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_Qwen3-30B-A3B_cot",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_Qwen3-32B_cot",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_Qwen3-8B_cot",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_Qwen3-Coder-30B-A3B-Instruct",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_Seed-Coder-8B-Instruct",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
+      }
+    },
+    {
+      "name": "_old_deepseek-coder-33b-instruct",
+      "files": {
+        "ruby": "ruby_2025-04-06.jsonl",
+        "java": "java_2025-04-06.jsonl",
+        "go": "go_2025-04-06.jsonl",
+        "typescript": "typescript_2025-04-06.jsonl",
+        "rust": "rust_2025-04-06.jsonl",
+        "csharp": "csharp_2025-04-06.jsonl",
+        "cpp": "cpp_2025-04-06.jsonl",
+        "python": "python_2025-04-06.jsonl",
+        "javascript": "javascript_2025-04-06.jsonl"
       }
     },
     {
       "name": "deepseek-coder-33b-instruct",
       "files": {
-        "cpp": "cpp_2025-04-06.jsonl",
-        "csharp": "csharp_2025-04-06.jsonl",
-        "go": "go_2025-04-06.jsonl",
-        "java": "java_2025-04-06.jsonl",
-        "javascript": "javascript_2025-04-06.jsonl",
-        "python": "python_2025-04-06.jsonl",
-        "ruby": "ruby_2025-04-06.jsonl",
-        "rust": "rust_2025-04-06.jsonl",
-        "typescript": "typescript_2025-04-06.jsonl"
+        "python": "python.jsonl",
+        "php": "php.jsonl",
+        "kotlin": "kotlin.jsonl",
+        "csharp": "csharp.jsonl",
+        "typescript": "typescript.jsonl",
+        "go": "go.jsonl",
+        "rust": "rust.jsonl",
+        "cpp": "cpp.jsonl",
+        "java": "java.jsonl",
+        "scala": "scala.jsonl",
+        "javascript": "javascript.jsonl",
+        "ruby": "ruby.jsonl"
+      }
+    },
+    {
+      "name": "giga38b_giga_base_epoch_3_cot",
+      "files": {
+        "typescript": "typescript_cot.jsonl"
+      }
+    },
+    {
+      "name": "giga38b_giga_base_epoch_4_cot",
+      "files": {
+        "typescript": "typescript_cot.jsonl"
+      }
+    },
+    {
+      "name": "giga38b_qwen25coder32_base_epoch_4_cot",
+      "files": {
+        "typescript": "typescript_cot.jsonl"
+      }
+    },
+    {
+      "name": "giga9b_v6.5_epoch_0_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "giga9b_v6.5_epoch_1_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "giga9b_v6.5_epoch_2_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "giga9b_v6.5_epoch_3_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "giga9b_v6.5_epoch_4_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "gpt-oss-120b_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "gpt-oss-20b_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "o4-mini_cot",
+      "files": {
+        "python": "python_cot.jsonl"
+      }
+    },
+    {
+      "name": "unknown_empty_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "unknown_step_12_cont_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "unknown_step_21_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "unknown_step_27_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "unknown_step_60_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
+      }
+    },
+    {
+      "name": "unknown_step_66_cot",
+      "files": {
+        "go": "go_cot.jsonl",
+        "scala": "scala_cot.jsonl",
+        "typescript": "typescript_cot.jsonl",
+        "java": "java_cot.jsonl",
+        "python": "python_cot.jsonl",
+        "cpp": "cpp_cot.jsonl",
+        "php": "php_cot.jsonl",
+        "javascript": "javascript_cot.jsonl",
+        "rust": "rust_cot.jsonl",
+        "csharp": "csharp_cot.jsonl",
+        "kotlin": "kotlin_cot.jsonl",
+        "ruby": "ruby_cot.jsonl"
       }
     }
   ]
