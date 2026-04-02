@@ -31,18 +31,12 @@
     {
       "name": "DeepSeek-R1-Distill-Qwen-14B_cot",
       "files": {
-        "go": "go_cot.jsonl",
-        "scala": "scala_cot.jsonl",
         "typescript": "typescript_cot.jsonl",
         "java": "java_cot.jsonl",
         "python": "python_cot.jsonl",
         "cpp": "cpp_cot.jsonl",
-        "php": "php_cot.jsonl",
         "javascript": "javascript_cot.jsonl",
-        "rust": "rust_cot.jsonl",
-        "csharp": "csharp_cot.jsonl",
-        "kotlin": "kotlin_cot.jsonl",
-        "ruby": "ruby_cot.jsonl"
+        "csharp": "csharp_cot.jsonl"
       }
     },
     {
@@ -113,11 +107,9 @@
         "java": "java_cot.jsonl",
         "python": "python_cot.jsonl",
         "cpp": "cpp_cot.jsonl",
-        "php": "php_cot.jsonl",
         "javascript": "javascript_cot.jsonl",
         "rust": "rust_cot.jsonl",
         "csharp": "csharp_cot.jsonl",
-        "kotlin": "kotlin_cot.jsonl",
         "ruby": "ruby_cot.jsonl"
       }
     },
@@ -141,33 +133,19 @@
     {
       "name": "OpenCodeReasoning-Nemotron-1.1-32B_cot",
       "files": {
-        "go": "go_cot.jsonl",
-        "scala": "scala_cot.jsonl",
-        "typescript": "typescript_cot.jsonl",
-        "java": "java_cot.jsonl",
         "python": "python_cot.jsonl",
-        "cpp": "cpp_cot.jsonl",
-        "php": "php_cot.jsonl",
-        "javascript": "javascript_cot.jsonl",
-        "rust": "rust_cot.jsonl",
-        "csharp": "csharp_cot.jsonl",
-        "kotlin": "kotlin_cot.jsonl",
-        "ruby": "ruby_cot.jsonl"
+        "javascript": "javascript_cot.jsonl"
       }
     },
     {
       "name": "OpenCoder-8B-Instruct",
       "files": {
         "python": "python.jsonl",
-        "php": "php.jsonl",
-        "kotlin": "kotlin.jsonl",
         "csharp": "csharp.jsonl",
-        "typescript": "typescript.jsonl",
         "go": "go.jsonl",
         "rust": "rust.jsonl",
         "cpp": "cpp.jsonl",
         "java": "java.jsonl",
-        "scala": "scala.jsonl",
         "javascript": "javascript.jsonl",
         "ruby": "ruby.jsonl"
       }
@@ -175,18 +153,10 @@
     {
       "name": "OpenReasoning-Nemotron-32B_cot",
       "files": {
-        "go": "go_cot.jsonl",
         "scala": "scala_cot.jsonl",
-        "typescript": "typescript_cot.jsonl",
-        "java": "java_cot.jsonl",
         "python": "python_cot.jsonl",
-        "cpp": "cpp_cot.jsonl",
-        "php": "php_cot.jsonl",
         "javascript": "javascript_cot.jsonl",
-        "rust": "rust_cot.jsonl",
-        "csharp": "csharp_cot.jsonl",
-        "kotlin": "kotlin_cot.jsonl",
-        "ruby": "ruby_cot.jsonl"
+        "kotlin": "kotlin_cot.jsonl"
       }
     },
     {
@@ -227,7 +197,6 @@
       "name": "Qwen3-14B_cot",
       "files": {
         "go": "go_cot.jsonl",
-        "scala": "scala_cot.jsonl",
         "typescript": "typescript_cot.jsonl",
         "java": "java_cot.jsonl",
         "python": "python_cot.jsonl",
@@ -236,8 +205,7 @@
         "javascript": "javascript_cot.jsonl",
         "rust": "rust_cot.jsonl",
         "csharp": "csharp_cot.jsonl",
-        "kotlin": "kotlin_cot.jsonl",
-        "ruby": "ruby_cot.jsonl"
+        "kotlin": "kotlin_cot.jsonl"
       }
     },
     {
@@ -261,7 +229,6 @@
       "name": "Qwen3-235B-A22B_cot",
       "files": {
         "go": "go_cot.jsonl",
-        "scala": "scala_cot.jsonl",
         "typescript": "typescript_cot.jsonl",
         "java": "java_cot.jsonl",
         "python": "python_cot.jsonl",
@@ -270,7 +237,6 @@
         "javascript": "javascript_cot.jsonl",
         "rust": "rust_cot.jsonl",
         "csharp": "csharp_cot.jsonl",
-        "kotlin": "kotlin_cot.jsonl",
         "ruby": "ruby_cot.jsonl"
       }
     },
@@ -278,7 +244,6 @@
       "name": "Qwen3-30B-A3B-Instruct-2507_cot",
       "files": {
         "go": "go_cot.jsonl",
-        "scala": "scala_cot.jsonl",
         "typescript": "typescript_cot.jsonl",
         "java": "java_cot.jsonl",
         "python": "python_cot.jsonl",
@@ -287,14 +252,12 @@
         "javascript": "javascript_cot.jsonl",
         "rust": "rust_cot.jsonl",
         "csharp": "csharp_cot.jsonl",
-        "kotlin": "kotlin_cot.jsonl",
         "ruby": "ruby_cot.jsonl"
       }
     },
     {
       "name": "Qwen3-30B-A3B_cot",
       "files": {
-        "go": "go_cot.jsonl",
         "scala": "scala_cot.jsonl",
         "typescript": "typescript_cot.jsonl",
         "java": "java_cot.jsonl",
@@ -311,17 +274,13 @@
     {
       "name": "Qwen3-32B_cot",
       "files": {
-        "go": "go_cot.jsonl",
         "scala": "scala_cot.jsonl",
         "typescript": "typescript_cot.jsonl",
         "java": "java_cot.jsonl",
         "python": "python_cot.jsonl",
         "cpp": "cpp_cot.jsonl",
-        "php": "php_cot.jsonl",
         "javascript": "javascript_cot.jsonl",
-        "rust": "rust_cot.jsonl",
         "csharp": "csharp_cot.jsonl",
-        "kotlin": "kotlin_cot.jsonl",
         "ruby": "ruby_cot.jsonl"
       }
     },
@@ -354,7 +313,6 @@
         "rust": "rust.jsonl",
         "cpp": "cpp.jsonl",
         "java": "java.jsonl",
-        "scala": "scala.jsonl",
         "javascript": "javascript.jsonl",
         "ruby": "ruby.jsonl"
       }
@@ -667,7 +625,6 @@
       "files": {
         "python": "python.jsonl",
         "php": "php.jsonl",
-        "kotlin": "kotlin.jsonl",
         "csharp": "csharp.jsonl",
         "typescript": "typescript.jsonl",
         "go": "go.jsonl",
@@ -677,24 +634,6 @@
         "scala": "scala.jsonl",
         "javascript": "javascript.jsonl",
         "ruby": "ruby.jsonl"
-      }
-    },
-    {
-      "name": "giga38b_giga_base_epoch_3_cot",
-      "files": {
-        "typescript": "typescript_cot.jsonl"
-      }
-    },
-    {
-      "name": "giga38b_giga_base_epoch_4_cot",
-      "files": {
-        "typescript": "typescript_cot.jsonl"
-      }
-    },
-    {
-      "name": "giga38b_qwen25coder32_base_epoch_4_cot",
-      "files": {
-        "typescript": "typescript_cot.jsonl"
       }
     },
     {
