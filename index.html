@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,6 +75,87 @@
       background: rgba(167, 139, 250, 0.12);
       border-color: rgba(167, 139, 250, 0.4);
       color: #c4b5fd;
+    }
+
+    /* ===== HAMBURGER MENU ===== */
+    .hamburger-group {
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 102;
+      transition: transform 0.2s;
+    }
+    .hamburger:hover {
+      transform: scale(1.1);
+    }
+    .hamburger span {
+      width: 24px;
+      height: 3px;
+      background: #cbd5e1;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(8px, 8px);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+    
+    .hamburger-lang {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      z-index: 102;
+      transition: transform 0.2s;
+      font-size: 24px;
+    }
+    .hamburger-lang:hover {
+      transform: scale(1.1);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 72px;
+      left: 0;
+      right: 0;
+      background: rgba(15, 23, 42, 0.98);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+      padding: 20px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      transform: translateY(-100%);
+      transition: transform 0.3s ease;
+    }
+    .mobile-menu.active {
+      transform: translateY(0);
+    }
+    .mobile-menu .nav-btn {
+      width: 100%;
+      justify-content: flex-start;
+    }
+    .mobile-menu .lang-toggle {
+      width: 100%;
+      justify-content: center;
+      margin-top: 8px;
     }
 
     /* ===== LANGUAGE TOGGLE — in header ===== */
@@ -299,7 +381,7 @@
     .leaderboard-wrapper {
       width: 100%;
       border: 1px solid #334155; border-radius: 16px;
-      padding: 24px; background: #1e293b;
+      padding: 24px; background: linear-gradient(135deg, #1e293b 0%, #1e3a5a 100%);
       box-shadow: 0 4px 24px rgba(0,0,0,0.3);
     }
 
@@ -381,6 +463,37 @@
       background: linear-gradient(90deg, #6366f1, #8b5cf6);
     }
 
+    /* ===== COLLAPSIBLE FILTERS FOR MOBILE ===== */
+    .filters-toggle {
+      display: none;
+      padding: 10px 16px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 10px;
+      color: #a5b4fc;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 16px;
+      transition: background 0.2s, border-color 0.2s;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .filters-toggle:hover {
+      background: rgba(99, 102, 241, 0.25);
+      border-color: rgba(99, 102, 241, 0.5);
+    }
+    .filters-toggle-icon {
+      transition: transform 0.3s;
+    }
+    .filters-toggle.active .filters-toggle-icon {
+      transform: rotate(180deg);
+    }
+    .filters-container {
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
     /* ===== LANGUAGE FILTER ===== */
     .lang-filter {
       display: flex; flex-wrap: wrap; gap: 8px;
@@ -418,7 +531,32 @@
     }
 
     /* ===== TABLE ===== */
-    .table-container { width: 100%; overflow-x: auto; }
+    .table-container { 
+      width: 100%; 
+      overflow-x: auto;
+      position: relative;
+    }
+    /* Custom scrollbar for table container - light blue theme */
+    .table-container::-webkit-scrollbar {
+      height: 10px;
+    }
+    .table-container::-webkit-scrollbar-track {
+      background: #1e293b;
+      border-radius: 5px;
+    }
+    .table-container::-webkit-scrollbar-thumb {
+      background: linear-gradient(90deg, #7dd3fc, #38bdf8);
+      border-radius: 5px;
+      border: 2px solid #1e293b;
+    }
+    .table-container::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+    }
+    /* Firefox scrollbar */
+    .table-container {
+      scrollbar-width: thin;
+      scrollbar-color: #38bdf8 #1e293b;
+    }
     table { width: 100%; border-collapse: collapse; }
     thead th {
       position: sticky; top: 0; background: #0f172a;
@@ -442,6 +580,45 @@
     td.model-name {
       font-family: 'Inter', sans-serif;
       font-weight: 600; color: #f1f5f9; white-space: nowrap;
+      position: relative;
+      cursor: help;
+    }
+    
+    /* Tooltip for meta.json hyperparameters */
+    .model-tooltip {
+      position: fixed;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid #475569;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #cbd5e1;
+      white-space: nowrap;
+      z-index: 10001;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    td.model-name:hover .model-tooltip {
+      opacity: 1;
+    }
+    .model-tooltip-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .model-tooltip-row:last-child {
+      margin-bottom: 0;
+    }
+    .model-tooltip-key {
+      color: #a5b4fc;
+      font-weight: 600;
+    }
+    .model-tooltip-value {
+      color: #e2e8f0;
     }
 
     /* ===== RANK BADGES ===== */
@@ -469,8 +646,32 @@
     .compare-wrapper {
       width: 100%;
       border: 1px solid #334155; border-radius: 16px;
-      padding: 28px; background: #1e293b;
+      padding: 28px; background: linear-gradient(135deg, #1e293b 0%, #1e3a5a 100%);
       box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .compare-barplot-container {
+      width: 100%; max-width: 900px;
+      margin: 24px auto;
+      padding: 16px;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 12px;
+      border: 1px solid #475569;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    }
+    .compare-barplot-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 20px;
+      text-align: center;
+      background: linear-gradient(135deg, #e2e8f0, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .compare-barplot-canvas {
+      width: 100% !important;
+      max-height: 450px !important;
     }
     .compare-selector-section {
       margin-bottom: 24px;
@@ -559,28 +760,92 @@
     }
     .compare-chart-container {
       position: relative;
-      width: 100%; max-width: 700px;
-      margin: 0 auto;
-      aspect-ratio: 1;
+      width: 100%; max-width: 900px;
+      margin: 24px auto;
+      padding: 16px;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 12px;
+      border: 1px solid #475569;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
     }
     .compare-chart-container canvas {
       width: 100% !important;
       height: 100% !important;
+      max-height: 800px !important;
     }
     .compare-hint {
       text-align: center; padding: 60px 20px;
       color: #64748b; font-size: 15px; font-weight: 500;
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 1000px) {
+      .hamburger-group { display: flex; }
+      .header-desktop-links, .header-desktop-nav { display: none !important; }
+      .mobile-menu, .mobile-lang-menu { display: flex; }
+    }
+
+    @media (max-width: 1000px) {
+      .filters-toggle { display: flex; }
+      .filters-container { max-height: 0; }
+      .filters-container.active { max-height: 2000px; }
       .header { padding: 0 12px; height: 64px; }
-      .header-logo { height: 64px; }
-      .nav-btn { font-size: 12px; padding: 4px 10px; }
+      .nav-btn { font-size: 11px; padding: 4px 8px; }
+      .nav-btn img { width: 14px; height: 14px; }
+      .lang-toggle button { padding: 4px 8px; font-size: 11px; }
       .intro { margin-top: 80px; }
       .intro-logo { width: 80px; }
-      .leaderboard-wrapper { padding: 12px; }
+      .leaderboard-wrapper, .compare-wrapper { padding: 12px; }
       .leaderboard-title { font-size: clamp(1.4rem, 2.5vw, 2rem); }
-      .lang-toggle-fixed { bottom: 12px; left: 12px; }
+      .table-container { overflow-x: scroll; }
+      table { min-width: 600px; }
+      .lang-filter { gap: 6px; }
+      .lang-chip { padding: 2px 6px; }
+      .slider-section { margin-bottom: 16px; }
+      .compare-chart-container { 
+        max-width: 100%; 
+        padding: 12px;
+        margin: 20px auto;
+      }
+      .compare-chart-container canvas {
+        max-height: 350px !important;
+      }
+      .compare-barplot-container {
+        padding: 12px;
+        margin: 20px 0;
+      }
+      .compare-barplot-title {
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+      .compare-barplot-canvas {
+        max-height: 300px !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-logo-link { font-size: 18px; }
+      .header-nav { width: 100%; justify-content: center; margin-top: 8px; }
+      .leaderboard-wrapper, .compare-wrapper { padding: 8px; }
+      .slider-dates { flex-direction: column; gap: 4px; align-items: flex-start; }
+      .lang-filter { flex-direction: column; align-items: flex-start; }
+      .compare-chart-container {
+        padding: 8px;
+        margin: 16px auto;
+      }
+      .compare-chart-container canvas {
+        max-height: 280px !important;
+      }
+      .compare-barplot-container {
+        padding: 8px;
+        margin: 16px 0;
+      }
+      .compare-barplot-title {
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+      .compare-barplot-canvas {
+        max-height: 250px !important;
+      }
     }
   </style>
 </head>
@@ -592,17 +857,27 @@
   <header class="header">
     <div class="header-left">
       <a href="#/" class="header-logo-link">MULTI-LCB</a>
-      <a class="nav-btn" href="https://github.com/Multi-LCB/Multi-LiveCodeBench" target="_blank">
+      <a class="nav-btn header-desktop-links" href="https://github.com/Multi-LCB/Multi-LiveCodeBench" target="_blank">
         <img src="./assets/codeLogo.svg" alt="" /> Code
       </a>
-      <a class="nav-btn" href="https://huggingface.co/datasets/" target="_blank">
+      <a class="nav-btn header-desktop-links" href="https://huggingface.co/datasets/" target="_blank">
         <img src="./assets/dataLogo.svg" alt="" /> Hf
       </a>
-      <a class="nav-btn" href="https://github.com/Multi-LCB/Multi-LiveCodeBench" target="_blank">
+      <a class="nav-btn header-desktop-links" href="https://github.com/Multi-LCB/Multi-LiveCodeBench" target="_blank">
         <img src="./assets/cupLogo.svg" alt="" /> Submit
       </a>
     </div>
-    <nav class="header-nav">
+    <div class="hamburger-group" id="hamburgerGroup">
+      <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="hamburger-lang" id="hamburgerLang" onclick="toggleMobileLang()">
+        🌐
+      </div>
+    </div>
+    <nav class="header-nav header-desktop-nav" id="headerNav">
       <a class="nav-btn" href="#/" id="navMain">
         🏠 <span data-text="home">Main</span>
       </a>
@@ -624,6 +899,42 @@
       </div>
     </nav>
   </header>
+
+  <!-- MOBILE MENU - Navigation Links -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a class="nav-btn" href="https://github.com/Multi-LCB/Multi-LiveCodeBench" target="_blank" onclick="closeMobileMenu()">
+      <img src="./assets/codeLogo.svg" alt="" /> Code
+    </a>
+    <a class="nav-btn" href="https://huggingface.co/datasets/" target="_blank" onclick="closeMobileMenu()">
+      <img src="./assets/dataLogo.svg" alt="" /> Hf
+    </a>
+    <a class="nav-btn" href="https://github.com/Multi-LCB/Multi-LiveCodeBench" target="_blank" onclick="closeMobileMenu()">
+      <img src="./assets/cupLogo.svg" alt="" /> Submit
+    </a>
+    <a class="nav-btn" href="#/" id="navMainMobile" onclick="closeMobileMenu()">
+      🏠 <span data-text="home">Main</span>
+    </a>
+    <a class="nav-btn" href="#/leaderboard" id="navLeaderboardMobile" onclick="closeMobileMenu()">
+      <img src="./assets/leaderBoarIcon.svg" alt="" />
+      <span data-text="leaderboard">Leaderboard</span>
+    </a>
+    <a class="nav-btn" href="#/compare" id="navCompareMobile" onclick="closeMobileMenu()">
+      🕸️ <span data-text="compare">Compare</span>
+    </a>
+    <a class="nav-btn" href="#/news" id="navNewsMobile" onclick="closeMobileMenu()">
+      📰 <span data-text="news">News</span>
+    </a>
+  </div>
+
+  <!-- MOBILE LANGUAGE MENU -->
+  <div class="mobile-menu" id="mobileLangMenu">
+    <div class="lang-toggle">
+      <button onclick="setLang('eng'); closeMobileLang();">ENG</button>
+      <button onclick="setLang('ru'); closeMobileLang();">RU</button>
+      <button onclick="setLang('cn'); closeMobileLang();">中文</button>
+      <button onclick="setLang('he'); closeMobileLang();">עבר</button>
+    </div>
+  </div>
 
   <!-- INTRO (only visible on main page) -->
   <section class="intro" id="intro-section">
@@ -661,9 +972,48 @@
           <div class="slider-ticks" id="sliderTicks"></div>
         </div>
 
-        <!-- Language filter -->
-        <div class="lang-filter" id="langFilter">
-          <span class="lang-filter-title" data-text="filterLangs">Filter languages:</span>
+        <!-- Filters toggle button for mobile -->
+        <button class="filters-toggle" id="filtersToggle" onclick="toggleFilters()">
+          <span>🔍 Filters</span>
+          <span class="filters-toggle-icon">▼</span>
+        </button>
+
+        <!-- Filters container (collapsible on mobile) -->
+        <div class="filters-container active" id="filtersContainer">
+          <!-- Language filter -->
+          <div class="lang-filter" id="langFilter">
+            <span class="lang-filter-title" data-text="filterLangs">Filter languages:</span>
+          </div>
+
+          <!-- Difficulty filter -->
+          <div class="lang-filter" id="diffFilter" style="margin-bottom: 16px;">
+            <span class="lang-filter-title" data-text="filterByDifficulty">Filter by difficulty:</span>
+            <div class="lang-chip">
+              <input type="checkbox" id="cb-diff-E" checked />
+              <label for="cb-diff-E" style="font-size: 13px; color: #34d399;" data-text="difficultyEasy">Easy</label>
+            </div>
+            <div class="lang-chip">
+              <input type="checkbox" id="cb-diff-M" checked />
+              <label for="cb-diff-M" style="font-size: 13px; color: #fb923c;" data-text="difficultyMedium">Medium</label>
+            </div>
+            <div class="lang-chip">
+              <input type="checkbox" id="cb-diff-H" checked />
+              <label for="cb-diff-H" style="font-size: 13px; color: #f87171;" data-text="difficultyHard">Hard</label>
+            </div>
+          </div>
+
+          <!-- Platform filter -->
+          <div class="lang-filter" id="platformFilter" style="margin-bottom: 16px;">
+            <span class="lang-filter-title" data-text="filterByPlatform">Filter by platform:</span>
+          </div>
+
+          <!-- Show old models checkbox -->
+          <div class="lang-filter" style="margin-bottom: 16px;">
+            <div class="lang-chip">
+              <input type="checkbox" id="cb-show-old" />
+              <label for="cb-show-old" style="font-size: 13px; color: #94a3b8;" data-text="showOldModels">Show _old* models</label>
+            </div>
+          </div>
         </div>
 
         <!-- Table -->
@@ -700,6 +1050,59 @@
           <div class="slider-ticks" id="compareSliderTicks"></div>
         </div>
 
+        <!-- Filters toggle button for mobile (compare page) -->
+        <button class="filters-toggle" id="compareFiltersToggle" onclick="toggleCompareFilters()">
+          <span>🔍 Filters</span>
+          <span class="filters-toggle-icon">▼</span>
+        </button>
+
+        <!-- Filters container (collapsible on mobile) -->
+        <div class="filters-container active" id="compareFiltersContainer">
+          <!-- Language filter for compare -->
+          <div class="lang-filter" id="compareLangFilter">
+            <span class="lang-filter-title" data-text="filterLangs">Filter languages:</span>
+          </div>
+
+          <!-- Difficulty filter for compare -->
+          <div class="lang-filter" id="compareDiffFilter" style="margin-bottom: 16px;">
+            <span class="lang-filter-title" data-text="filterByDifficulty">Filter by difficulty:</span>
+            <div class="lang-chip">
+              <input type="checkbox" id="compare-cb-diff-E" checked />
+              <label for="compare-cb-diff-E" style="font-size: 13px; color: #34d399;" data-text="difficultyEasy">Easy</label>
+            </div>
+            <div class="lang-chip">
+              <input type="checkbox" id="compare-cb-diff-M" checked />
+              <label for="compare-cb-diff-M" style="font-size: 13px; color: #fb923c;" data-text="difficultyMedium">Medium</label>
+            </div>
+            <div class="lang-chip">
+              <input type="checkbox" id="compare-cb-diff-H" checked />
+              <label for="compare-cb-diff-H" style="font-size: 13px; color: #f87171;" data-text="difficultyHard">Hard</label>
+            </div>
+          </div>
+
+          <!-- Platform filter for compare -->
+          <div class="lang-filter" id="comparePlatformFilter" style="margin-bottom: 16px;">
+            <span class="lang-filter-title" data-text="filterByPlatform">Filter by platform:</span>
+          </div>
+
+          <!-- Reasoning filter for compare -->
+          <div class="lang-filter" style="margin-bottom: 16px;">
+            <span class="lang-filter-title" data-text="filterByReasoning">Reasoning:</span>
+            <div class="lang-chip">
+              <input type="radio" name="compare-reasoning" id="compare-cb-reason-any" value="any" checked />
+              <label for="compare-cb-reason-any" style="font-size: 13px; color: #94a3b8;" data-text="reasoningAny">Any</label>
+            </div>
+            <div class="lang-chip">
+              <input type="radio" name="compare-reasoning" id="compare-cb-reason-only" value="only" />
+              <label for="compare-cb-reason-only" style="font-size: 13px; color: #a5b4fc;" data-text="reasoningOnly">Only CoT</label>
+            </div>
+            <div class="lang-chip">
+              <input type="radio" name="compare-reasoning" id="compare-cb-reason-no" value="no" />
+              <label for="compare-cb-reason-no" style="font-size: 13px; color: #f472b6;" data-text="reasoningNo">No CoT</label>
+            </div>
+          </div>
+        </div>
+
         <div class="compare-selector-section">
           <span class="compare-selector-label" data-text="compareSelectModels">Select models to compare:</span>
           <div class="compare-selected-models" id="compareSelectedModels"></div>
@@ -713,6 +1116,10 @@
         </div>
         <div class="compare-chart-container" id="compareChartContainer">
           <canvas id="radarChart"></canvas>
+        </div>
+        <div class="compare-barplot-container" id="compareBarplotContainer">
+          <h3 class="compare-barplot-title" data-text="compareBarplotTitle">Pass@1 by Month</h3>
+          <canvas id="barplotChart" class="compare-barplot-canvas"></canvas>
         </div>
       </div>
     </div>
@@ -871,22 +1278,46 @@ async function loadContent() {
       n:                  lb.meta.n                   || 'n',
       compareTitle:       cmp.meta.title              || 'Model Comparison',
       compareSelectModels: cmp.meta.selectModels      || 'Select models to compare:',
+      compareBarplotTitle: cmp.meta.compareBarplotTitle || 'Pass@1 by Month',
+      filterByDifficulty: lb.meta.filterByDifficulty  || 'Filter by difficulty:',
+      filterByPlatform:   lb.meta.filterByPlatform    || 'Filter by platform:',
+      difficultyEasy:     lb.meta.difficultyEasy      || 'Easy',
+      difficultyMedium:   lb.meta.difficultyMedium    || 'Medium',
+      difficultyHard:     lb.meta.difficultyHard      || 'Hard',
+      footnoteSubsetTasks: lb.meta.footnoteSubsetTasks || '* Model was evaluated on a subset of tasks.',
+      footnoteSubsetLangs: lb.meta.footnoteSubsetLangs || '✝ Model was evaluated on a subset of languages.',
+      showOldModels:      lb.meta.showOldModels       || 'Show _old* models',
+      filterByReasoning:  lb.meta.filterByReasoning   || 'Reasoning:',
+      reasoningAny:       lb.meta.reasoningAny        || 'Any',
+      reasoningOnly:      lb.meta.reasoningOnly       || 'Only CoT',
+      reasoningNo:        lb.meta.reasoningNo         || 'No CoT',
     };
 
     newsData = parseUpdates(updText || '');
 
     updateAllTexts();
     renderNewsForLang();
-    updateSliderInfo();
-    if (!document.getElementById("page-leaderboard").classList.contains("hidden")) renderTable();
-    if (!document.getElementById("page-compare").classList.contains("hidden")) updateCompareSliderInfo();
+    
+    // Re-render leaderboard if visible
+    if (!document.getElementById("page-leaderboard").classList.contains("hidden")) {
+      updateSliderInfo();
+      renderTable();
+    }
+    
+    // Re-render compare if visible
+    if (!document.getElementById("page-compare").classList.contains("hidden")) {
+      updateCompareSliderInfo();
+      renderCompareChips();
+      renderRadarChart();
+      renderBarplotChart();
+    }
   } catch (e) {
     console.error('Failed to load content:', e);
   }
 }
 
-// Languages that exist in the data
-const LANGUAGES = ["python","javascript","typescript","java","c++","c#","go","rust","ruby"];
+// Languages that exist in the data (php, kotlin, scala at the end)
+const LANGUAGES = ["python","javascript","typescript","java","c++","c#","go","rust","ruby","php","kotlin","scala"];
 
 // Short display names for languages
 const LANG_SHORT = {
@@ -912,8 +1343,8 @@ const LANG_LOGO = {
   "kotlin": "logo_kotlin.png", "php": "logo_php.png", "scala": "logo_scala.png"
 };
 
-// All languages for the filter (including those not in data)
-const ALL_FILTER_LANGUAGES = ["python","javascript","typescript","java","c++","c#","go","rust","ruby","kotlin","php","scala"];
+// All languages for the filter (including those not in data) - php, kotlin, scala at the end
+const ALL_FILTER_LANGUAGES = ["python","javascript","typescript","java","c++","c#","go","rust","ruby","php","kotlin","scala"];
 
 // Mapping from JSONL file lang names to pass@1 column names
 const JSONL_LANG_TO_COL = {
@@ -926,6 +1357,9 @@ const JSONL_LANG_TO_COL = {
   "go": "pass@1[go]",
   "rust": "pass@1[rust]",
   "ruby": "pass@1[ruby]",
+  "kotlin": "pass@1[kotlin]",
+  "php": "pass@1[php]",
+  "scala": "pass@1[scala]",
 };
 
 // ============================================================
@@ -935,8 +1369,16 @@ let lang = "eng";
 let allData = [];
 let startDate = 0, endDate = 0, dateMin = 0, dateMax = 0;
 let activeLangs = new Set(LANGUAGES);
+let activeDifficulties = new Set(['E', 'M', 'H']); // Difficulty filter
+let activePlatforms = new Set(); // Platform filter
+let showOldModels = false; // Show/hide _old* models
+let reasoningFilter = 'any'; // 'any', 'only', 'no' for _cot models
 let currentSortKey = null, sortDirection = null;
 let originalData = [];
+let modelMeta = {}; // Store meta.json for each model
+let taskDifficulties = {}; // Store difficulty for each task_id
+let taskPlatforms = {}; // Store platform for each task_id
+let allPlatforms = new Set(); // All available platforms
 
 // ============================================================
 // I18N HELPERS
@@ -976,12 +1418,19 @@ function route() {
     document.getElementById("page-leaderboard").classList.remove("hidden");
     introSection.classList.add("hidden");
     document.getElementById("navLeaderboard").classList.add("active-nav");
+    // Render table if data is loaded (platform filter is set up globally now)
+    if (allData.length > 0) {
+      updateSliderInfo();
+      renderTable();
+    }
   } else if (hash === "#/compare") {
     document.getElementById("page-compare").classList.remove("hidden");
     introSection.classList.add("hidden");
     document.getElementById("navCompare").classList.add("active-nav");
     // Initialize compare if data loaded
-    if (allData.length > 0) initCompare();
+    if (allData.length > 0) {
+      initCompare();
+    }
   } else if (hash === "#/news") {
     document.getElementById("page-news").classList.remove("hidden");
     introSection.classList.add("hidden");
@@ -1040,7 +1489,20 @@ async function loadAllData() {
   const indexRes = await fetch('./data/index.json');
   const index = await indexRes.json();
 
-  // 2. For each model, load all language JSONL files in parallel
+  // 2. Load meta.json for each model
+  const metaPromises = index.models.map(modelEntry => {
+    const url = `./data/${encodeURIComponent(modelEntry.name)}/meta.json`;
+    return fetch(url)
+      .then(r => r.ok ? r.json() : null)
+      .then(meta => ({ model: modelEntry.name, meta }))
+      .catch(() => ({ model: modelEntry.name, meta: null }));
+  });
+  const metaResults = await Promise.all(metaPromises);
+  metaResults.forEach(({ model, meta }) => {
+    if (meta) modelMeta[model] = meta;
+  });
+
+  // 3. For each model, load all language JSONL files in parallel
   const fetchPromises = [];
   const fetchMeta = []; // track which model+lang each promise belongs to
 
@@ -1081,6 +1543,14 @@ async function loadAllData() {
         }
       }
       modelData[model][key][colName] = rec.pass;
+      // Store difficulty and platform if available
+      if (rec.difficulty && !taskDifficulties[rec.task_id]) {
+        taskDifficulties[rec.task_id] = rec.difficulty;
+      }
+      if (rec.platform && !taskPlatforms[rec.task_id]) {
+        taskPlatforms[rec.task_id] = rec.platform;
+        allPlatforms.add(rec.platform);
+      }
     }
   });
 
@@ -1100,9 +1570,58 @@ async function loadAllData() {
   startDate = dateMin;
   endDate = dateMax;
 
+  // Initialize activePlatforms with all available platforms FIRST
+  activePlatforms = new Set(allPlatforms);
+  
   setupSliders();
   setupLangFilter();
-  renderTable();
+  setupDifficultyFilter();
+  setupShowOldFilter();
+  setupReasoningFilter();
+  setupPlatformFilter();
+  
+  // Update slider info and render table if on leaderboard page
+  if (!document.getElementById("page-leaderboard").classList.contains("hidden")) {
+    updateSliderInfo();
+    renderTable();
+  }
+  
+  // Initialize compare if on compare page
+  if (!document.getElementById("page-compare").classList.contains("hidden")) {
+    initCompare();
+  }
+}
+
+// ============================================================
+// REASONING FILTER SETUP
+// ============================================================
+function setupReasoningFilter() {
+  ['any', 'only', 'no'].forEach(value => {
+    const radio = document.getElementById(`cb-reason-${value}`);
+    if (!radio) return;
+    radio.addEventListener("change", () => {
+      if (radio.checked) {
+        reasoningFilter = value;
+        currentSortKey = null; sortDirection = null;
+        renderTable();
+        updateSliderInfo();
+      }
+    });
+  });
+}
+
+// ============================================================
+// SHOW OLD MODELS FILTER SETUP
+// ============================================================
+function setupShowOldFilter() {
+  const cb = document.getElementById("cb-show-old");
+  if (!cb) return;
+  cb.addEventListener("change", () => {
+    showOldModels = cb.checked;
+    currentSortKey = null; sortDirection = null;
+    renderTable();
+    updateSliderInfo();
+  });
 }
 
 // ============================================================
@@ -1143,16 +1662,19 @@ function setupSliders() {
 }
 
 function updateSliderInfo() {
-  const filtered = filterByDate(allData);
-  const uniqueTasks = new Set(filtered.map(r => r.task_id));
-  const nTasks = uniqueTasks.size;
+  const summary = summarize(filterByDate(allData));
+  const nTasks = summary.length > 0 ? Math.max(...summary.map(r => r.n_task)) : 0;
+  const nModels = summary.length;
+  const nLangs = activeLangs.size;
   const infoEl = document.getElementById("sliderInfo");
   if (!infoEl) return;
   const template = t("sliderInfo");
   infoEl.textContent = template
     .replace("{n}", nTasks)
     .replace("{from}", fmtDate(startDate))
-    .replace("{to}", fmtDate(endDate));
+    .replace("{to}", fmtDate(endDate))
+    .replace("{nModels}", nModels)
+    .replace("{nLangs}", nLangs);
 }
 
 function updateTrack(si, ei, maxIdx) {
@@ -1204,7 +1726,9 @@ function setupLangFilter() {
 
     cb.addEventListener("change", () => {
       if (cb.checked) activeLangs.add(l); else activeLangs.delete(l);
-      currentSortKey = null; sortDirection = null; renderTable();
+      currentSortKey = null; sortDirection = null; 
+      renderTable();
+      updateSliderInfo();
     });
 
     const logoImg = document.createElement("img");
@@ -1222,10 +1746,37 @@ function setupLangFilter() {
 }
 
 // ============================================================
+// DIFFICULTY FILTER SETUP
+// ============================================================
+function setupDifficultyFilter() {
+  ['E', 'M', 'H'].forEach(diff => {
+    const cb = document.getElementById(`cb-diff-${diff}`);
+    if (!cb) return;
+    cb.addEventListener("change", () => {
+      if (cb.checked) activeDifficulties.add(diff);
+      else activeDifficulties.delete(diff);
+      currentSortKey = null; sortDirection = null;
+      renderTable();
+      updateSliderInfo();
+    });
+  });
+}
+
+// ============================================================
 // DATA PROCESSING
 // ============================================================
 function filterByDate(data) {
-  return data.filter(r => { const t = new Date(r.date).getTime(); return t >= startDate && t <= endDate; });
+  return data.filter(r => {
+    const t = new Date(r.date).getTime();
+    if (t < startDate || t > endDate) return false;
+    // Filter by difficulty if available
+    const difficulty = taskDifficulties[r.task_id];
+    if (difficulty && !activeDifficulties.has(difficulty)) return false;
+    // Filter by platform if available
+    const platform = taskPlatforms[r.task_id];
+    if (platform && !activePlatforms.has(platform)) return false;
+    return true;
+  });
 }
 function mean(arr) { return arr.length === 0 ? 0 : arr.reduce((a, b) => a + b, 0) / arr.length; }
 
@@ -1233,22 +1784,77 @@ function summarize(data) {
   const grouped = {};
   data.forEach(row => { (grouped[row.model] ||= []).push(row); });
 
-  const summary = Object.entries(grouped).map(([model, rows]) => {
+  let summary = Object.entries(grouped).map(([model, rows]) => {
     const result = { model, n_task: rows.length };
     let avgSum = 0, avgCount = 0;
     LANGUAGES.forEach(l => {
       const key = `pass@1[${l}]`;
       const val = mean(rows.map(r => r[key] ?? 0)) * 100;
       result[key] = val;
-      if (activeLangs.has(l)) { avgSum += val; avgCount++; }
+      // Only include in avg if the language is active AND the model has data for it (val > 0)
+      if (activeLangs.has(l) && val > 0) { avgSum += val; avgCount++; }
     });
     result["pass@1[avg]"] = avgCount > 0 ? avgSum / avgCount : 0;
     return result;
   });
 
+  // Filter out _old* models if showOldModels is false
+  if (!showOldModels) {
+    summary = summary.filter(r => !r.model.startsWith('_old'));
+  }
+
+  // Filter by reasoning (CoT) if not 'any'
+  if (reasoningFilter === 'only') {
+    summary = summary.filter(r => r.model.endsWith('_cot'));
+  } else if (reasoningFilter === 'no') {
+    summary = summary.filter(r => !r.model.endsWith('_cot'));
+  }
+
   summary.sort((a, b) => b["pass@1[avg]"] - a["pass@1[avg]"]);
   summary.forEach((r, i) => { r.modelIdx = i + 1; });
   return summary;
+}
+
+// ============================================================
+// PLATFORM FILTER SETUP
+// ============================================================
+function setupPlatformFilter() {
+  const container = document.getElementById("platformFilter");
+  if (!container) return;
+  
+  container.innerHTML = '';
+  const titleSpan = document.createElement("span");
+  titleSpan.className = "lang-filter-title";
+  titleSpan.setAttribute("data-text", "filterByPlatform");
+  titleSpan.textContent = t("filterByPlatform");
+  container.appendChild(titleSpan);
+  
+  const platforms = Array.from(allPlatforms).sort();
+  platforms.forEach(platform => {
+    const chip = document.createElement("div");
+    chip.className = "lang-chip";
+    
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = true;
+    cb.id = `cb-platform-${platform}`;
+    cb.addEventListener("change", () => {
+      if (cb.checked) activePlatforms.add(platform);
+      else activePlatforms.delete(platform);
+      currentSortKey = null; sortDirection = null;
+      renderTable();
+      updateSliderInfo();
+    });
+    
+    const lbl = document.createElement("label");
+    lbl.htmlFor = `cb-platform-${platform}`;
+    lbl.textContent = platform;
+    lbl.style.fontSize = "13px";
+    lbl.style.color = "#94a3b8";
+    
+    chip.append(cb, lbl);
+    container.appendChild(chip);
+  });
 }
 
 // ============================================================
@@ -1295,28 +1901,89 @@ function renderTable() {
   addTh("n", "n_task");
   thead.appendChild(hr);
 
+  // Calculate max tasks to determine which models have subsets
+  const maxTasks = Math.max(...data.map(r => r.n_task));
+  
+  // Count how many languages each model has (non-zero values)
+  const modelLangCounts = {};
+  data.forEach(row => {
+    let langCount = 0;
+    LANGUAGES.forEach(l => {
+      const key = `pass@1[${l}]`;
+      if (row[key] > 0) langCount++;
+    });
+    modelLangCounts[row.model] = langCount;
+  });
+  
   // BODY
   const tbody = document.getElementById("tableBody");
   tbody.innerHTML = "";
+  const needsTaskFootnote = data.some(r => r.n_task < maxTasks);
+  const needsLangFootnote = data.some(r => modelLangCounts[r.model] < 12);
+  
   data.forEach(row => {
     const tr = document.createElement("tr");
     // rank
     const tdR = document.createElement("td"); tdR.style.textAlign = "center";
     const b = document.createElement("span"); b.className = rankClass(row.modelIdx); b.textContent = row.modelIdx;
     tdR.appendChild(b); tr.appendChild(tdR);
-    // model
-    const tdM = document.createElement("td"); tdM.className = "model-name"; tdM.textContent = row.model; tr.appendChild(tdM);
+    // model - add markers and tooltip if needed
+    const tdM = document.createElement("td"); tdM.className = "model-name";
+    let modelText = row.model;
+    if (row.n_task < maxTasks) modelText += ' *';
+    if (modelLangCounts[row.model] < 12) modelText += ' ✝';
+    tdM.textContent = modelText;
+    
+    // Add tooltip with hyperparameters if meta.json exists
+    if (modelMeta[row.model]) {
+      const tooltip = document.createElement("div");
+      tooltip.className = "model-tooltip";
+      const meta = modelMeta[row.model];
+      tooltip.innerHTML = Object.entries(meta).map(([key, val]) => 
+        `<div class="model-tooltip-row"><span class="model-tooltip-key">${key}:</span><span class="model-tooltip-value">${val}</span></div>`
+      ).join('');
+      tdM.appendChild(tooltip);
+      
+      // Position tooltip below cursor on mouse move
+      tdM.addEventListener('mousemove', (e) => {
+        tooltip.style.left = e.clientX + 10 + 'px';
+        tooltip.style.top = e.clientY + 10 + 'px';
+      });
+    }
+    
+    tr.appendChild(tdM);
     // avg
     const tdA = document.createElement("td"); tdA.textContent = row["pass@1[avg]"].toFixed(1);
     tdA.style.fontWeight = "700"; tdA.style.color = "#a5b4fc"; tr.appendChild(tdA);
     // per lang
     aLangs.forEach(l => {
-      const td = document.createElement("td"); td.textContent = row[`pass@1[${l}]`].toFixed(1); tr.appendChild(td);
+      const td = document.createElement("td");
+      const val = row[`pass@1[${l}]`];
+      td.textContent = val > 0 ? val.toFixed(1) : '—';
+      if (val === 0) td.style.color = '#64748b';
+      tr.appendChild(td);
     });
     // tasks (n)
     const tdT = document.createElement("td"); tdT.textContent = row.n_task; tr.appendChild(tdT);
     tbody.appendChild(tr);
   });
+  
+  // Add footnotes if needed
+  if (needsTaskFootnote || needsLangFootnote) {
+    const trFootnote = document.createElement("tr");
+    const tdFootnote = document.createElement("td");
+    tdFootnote.colSpan = 3 + aLangs.length + 1;
+    tdFootnote.style.fontSize = "11px";
+    tdFootnote.style.color = "#94a3b8";
+    tdFootnote.style.paddingTop = "16px";
+    tdFootnote.style.fontStyle = "italic";
+    let footnoteText = "";
+    if (needsTaskFootnote) footnoteText += t("footnoteSubsetTasks") + " ";
+    if (needsLangFootnote) footnoteText += t("footnoteSubsetLangs");
+    tdFootnote.textContent = footnoteText;
+    trFootnote.appendChild(tdFootnote);
+    tbody.appendChild(trFootnote);
+  }
 }
 
 function sortIcon(key) {
@@ -1360,6 +2027,7 @@ const COMPARE_COLORS = [
 
 let compareSelectedModels = [];
 let compareChart = null;
+let compareBarChart = null;
 let compareInitialized = false;
 let compareStartDate = 0, compareEndDate = 0;
 let compareSliderSetup = false;
@@ -1367,7 +2035,14 @@ let compareSliderSetup = false;
 function getCompareSummary() {
   const filtered = allData.filter(r => {
     const t = new Date(r.date).getTime();
-    return t >= compareStartDate && t <= compareEndDate;
+    if (t < compareStartDate || t > compareEndDate) return false;
+    // Filter by difficulty if available
+    const difficulty = taskDifficulties[r.task_id];
+    if (difficulty && !activeDifficulties.has(difficulty)) return false;
+    // Filter by platform if available
+    const platform = taskPlatforms[r.task_id];
+    if (platform && !activePlatforms.has(platform)) return false;
+    return true;
   });
   return summarize(filtered);
 }
@@ -1375,6 +2050,10 @@ function getCompareSummary() {
 function initCompare() {
   if (!compareSliderSetup) {
     setupCompareSliders();
+    setupCompareLangFilter();
+    setupCompareDifficultyFilter();
+    setupComparePlatformFilter();
+    setupCompareReasoningFilter();
     compareSliderSetup = true;
   }
   if (!compareInitialized) {
@@ -1386,6 +2065,121 @@ function initCompare() {
   }
   renderCompareChips();
   renderRadarChart();
+  renderBarplotChart();
+}
+
+// ============================================================
+// COMPARE REASONING FILTER SETUP
+// ============================================================
+function setupCompareReasoningFilter() {
+  ['any', 'only', 'no'].forEach(value => {
+    const radio = document.getElementById(`compare-cb-reason-${value}`);
+    if (!radio) return;
+    radio.addEventListener("change", () => {
+      if (radio.checked) {
+        reasoningFilter = value;
+        renderCompareChips();
+        renderRadarChart();
+        renderBarplotChart();
+        updateCompareSliderInfo();
+      }
+    });
+  });
+}
+
+// ============================================================
+// COMPARE PAGE FILTERS
+// ============================================================
+function setupCompareLangFilter() {
+  const container = document.getElementById("compareLangFilter");
+  if (!container) return;
+
+  ALL_FILTER_LANGUAGES.forEach(l => {
+    const isInData = LANGUAGES.includes(l);
+    const chip = document.createElement("div");
+    chip.className = "lang-chip";
+
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = isInData;
+    cb.id = `compare-cb-${l}`;
+    if (!isInData) cb.disabled = true;
+
+    cb.addEventListener("change", () => {
+      if (cb.checked) activeLangs.add(l); else activeLangs.delete(l);
+      renderCompareChips();
+      renderRadarChart();
+      renderBarplotChart();
+      updateCompareSliderInfo();
+    });
+
+    const logoImg = document.createElement("img");
+    logoImg.className = "lang-logo";
+    logoImg.src = `./logos/${LANG_LOGO[l]}`;
+    logoImg.alt = LANG_FULL[l];
+
+    const lbl = document.createElement("label");
+    lbl.htmlFor = `compare-cb-${l}`;
+    lbl.textContent = LANG_SHORT[l];
+
+    chip.append(cb, logoImg, lbl);
+    container.appendChild(chip);
+  });
+}
+
+function setupCompareDifficultyFilter() {
+  ['E', 'M', 'H'].forEach(diff => {
+    const cb = document.getElementById(`compare-cb-diff-${diff}`);
+    if (!cb) return;
+    cb.addEventListener("change", () => {
+      if (cb.checked) activeDifficulties.add(diff);
+      else activeDifficulties.delete(diff);
+      renderCompareChips();
+      renderRadarChart();
+      renderBarplotChart();
+      updateCompareSliderInfo();
+    });
+  });
+}
+
+function setupComparePlatformFilter() {
+  const container = document.getElementById("comparePlatformFilter");
+  if (!container) return;
+  
+  container.innerHTML = '';
+  const titleSpan = document.createElement("span");
+  titleSpan.className = "lang-filter-title";
+  titleSpan.setAttribute("data-text", "filterByPlatform");
+  titleSpan.textContent = t("filterByPlatform");
+  container.appendChild(titleSpan);
+  
+  const platforms = Array.from(allPlatforms).sort();
+  platforms.forEach(platform => {
+    const chip = document.createElement("div");
+    chip.className = "lang-chip";
+    
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = true;
+    cb.id = `compare-cb-platform-${platform}`;
+    cb.addEventListener("change", () => {
+      if (cb.checked) activePlatforms.add(platform);
+      else activePlatforms.delete(platform);
+      renderCompareChips();
+      renderRadarChart();
+      renderBarplotChart();
+      updateCompareSliderInfo();
+    });
+    
+    const lbl = document.createElement("label");
+    lbl.htmlFor = `compare-cb-platform-${platform}`;
+    lbl.textContent = platform;
+    lbl.style.fontSize = "13px";
+    lbl.style.color = "#94a3b8";
+    
+    chip.append(cb, lbl);
+    container.appendChild(chip);
+  });
 }
 
 function setupCompareSliders() {
@@ -1416,9 +2210,10 @@ function setupCompareSliders() {
     track.style.width = (pct2 - pct1) + "%";
     // Update slider info
     updateCompareSliderInfo();
-    // Re-render chart
+    // Re-render charts
     renderCompareChips();
     renderRadarChart();
+    renderBarplotChart();
   };
 
   sS.addEventListener("input", update);
@@ -1440,18 +2235,19 @@ function setupCompareSliders() {
 }
 
 function updateCompareSliderInfo() {
-  const filtered = allData.filter(r => {
-    const t = new Date(r.date).getTime();
-    return t >= compareStartDate && t <= compareEndDate;
-  });
-  const uniqueTasks = new Set(filtered.map(r => r.task_id));
+  const summary = getCompareSummary();
+  const nTasks = summary.length > 0 ? Math.max(...summary.map(r => r.n_task)) : 0;
+  const nModels = summary.length;
+  const nLangs = activeLangs.size;
   const infoEl = document.getElementById("compareSliderInfo");
   if (!infoEl) return;
   const template = t("sliderInfo");
   infoEl.textContent = template
-    .replace("{n}", uniqueTasks.size)
+    .replace("{n}", nTasks)
     .replace("{from}", fmtDate(compareStartDate))
-    .replace("{to}", fmtDate(compareEndDate));
+    .replace("{to}", fmtDate(compareEndDate))
+    .replace("{nModels}", nModels)
+    .replace("{nLangs}", nLangs);
 }
 
 function renderCompareChips() {
@@ -1482,6 +2278,7 @@ function removeCompareModel(idx) {
   compareSelectedModels.splice(idx, 1);
   renderCompareChips();
   renderRadarChart();
+  renderBarplotChart();
 }
 
 function toggleCompareDropdown() {
@@ -1526,6 +2323,7 @@ function selectCompareModel(model) {
   document.getElementById('compareDropdown').classList.remove('open');
   renderCompareChips();
   renderRadarChart();
+  renderBarplotChart();
 }
 
 document.addEventListener('click', (e) => {
@@ -1559,9 +2357,22 @@ function renderRadarChart() {
 
   const ctx = document.getElementById('radarChart');
   
+  // Detect mobile screen size
+  const isMobile = window.innerWidth <= 768;
+  const tickSize = isMobile ? 7 : 11;
+  const pointLabelSize = isMobile ? 7 : 13;
+  const legendSize = isMobile ? 7 : 12;
+  const tooltipTitleSize = isMobile ? 8 : 13;
+  const tooltipBodySize = isMobile ? 7 : 12;
+  
   if (compareChart) {
     compareChart.data.labels = labels;
     compareChart.data.datasets = datasets;
+    compareChart.options.scales.r.ticks.font.size = tickSize;
+    compareChart.options.scales.r.pointLabels.font.size = pointLabelSize;
+    compareChart.options.plugins.legend.labels.font.size = legendSize;
+    compareChart.options.plugins.tooltip.titleFont.size = tooltipTitleSize;
+    compareChart.options.plugins.tooltip.bodyFont.size = tooltipBodySize;
     compareChart.update('none');
     return;
   }
@@ -1576,25 +2387,243 @@ function renderRadarChart() {
       scales: {
         r: {
           beginAtZero: true, max: 100, min: 0,
-          ticks: { stepSize: 20, color: '#64748b', backdropColor: 'transparent', font: { family: "'JetBrains Mono', monospace", size: 11 } },
+          ticks: { stepSize: 20, color: '#64748b', backdropColor: 'transparent', font: { family: "'JetBrains Mono', monospace", size: tickSize } },
           grid: { color: 'rgba(71, 85, 105, 0.4)', lineWidth: 1 },
           angleLines: { color: 'rgba(71, 85, 105, 0.3)', lineWidth: 1 },
-          pointLabels: { color: '#cbd5e1', font: { family: "'Inter', sans-serif", size: 13, weight: '600' }, padding: 16 }
+          pointLabels: { color: '#cbd5e1', font: { family: "'Inter', sans-serif", size: pointLabelSize, weight: '600' }, padding: 16 }
         }
       },
       plugins: {
-        legend: { display: true, position: 'bottom', labels: { color: '#cbd5e1', padding: 20, usePointStyle: true, pointStyle: 'circle', font: { family: "'Inter', sans-serif", size: 12, weight: '500' } } },
+        legend: { display: true, position: 'bottom', labels: { color: '#cbd5e1', padding: 20, usePointStyle: true, pointStyle: 'circle', font: { family: "'Inter', sans-serif", size: legendSize, weight: '500' } } },
         tooltip: {
           backgroundColor: 'rgba(15, 23, 42, 0.95)', titleColor: '#f1f5f9', bodyColor: '#cbd5e1',
           borderColor: '#475569', borderWidth: 1, cornerRadius: 8, padding: 12,
-          titleFont: { family: "'Inter', sans-serif", size: 13, weight: '600' },
-          bodyFont: { family: "'JetBrains Mono', monospace", size: 12 },
+          titleFont: { family: "'Inter', sans-serif", size: tooltipTitleSize, weight: '600' },
+          bodyFont: { family: "'JetBrains Mono', monospace", size: tooltipBodySize },
           callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw.toFixed(1)}%` }
         }
       }
     }
   });
 }
+
+function renderBarplotChart() {
+  const summary = getCompareSummary();
+  if (compareSelectedModels.length === 0) return;
+  
+  // Get all months in the date range
+  const startMonth = new Date(compareStartDate);
+  const endMonth = new Date(compareEndDate);
+  startMonth.setDate(1);
+  endMonth.setDate(1);
+  
+  const months = [];
+  const currentMonth = new Date(startMonth);
+  while (currentMonth <= endMonth) {
+    months.push(new Date(currentMonth));
+    currentMonth.setMonth(currentMonth.getMonth() + 1);
+  }
+  
+  const labels = months.map(m => m.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }));
+  
+  // Pre-filter data once for selected models and date range
+  const relevantData = allData.filter(r => {
+    const t = new Date(r.date).getTime();
+    if (t < compareStartDate || t > compareEndDate) return false;
+    if (!compareSelectedModels.includes(r.model)) return false;
+    // Apply difficulty filter
+    const difficulty = taskDifficulties[r.task_id];
+    if (difficulty && !activeDifficulties.has(difficulty)) return false;
+    // Apply platform filter
+    const platform = taskPlatforms[r.task_id];
+    if (platform && !activePlatforms.has(platform)) return false;
+    return true;
+  });
+  
+  // Group data by model and month for faster access
+  const modelMonthData = {};
+  relevantData.forEach(r => {
+    const date = new Date(r.date);
+    const monthKey = `${date.getFullYear()}-${date.getMonth()}`;
+    if (!modelMonthData[r.model]) modelMonthData[r.model] = {};
+    if (!modelMonthData[r.model][monthKey]) modelMonthData[r.model][monthKey] = [];
+    modelMonthData[r.model][monthKey].push(r);
+  });
+  
+  // Calculate pass@1 for each model for each month
+  const datasets = compareSelectedModels.map((modelName, idx) => {
+    const color = COMPARE_COLORS[idx % COMPARE_COLORS.length];
+    const data = months.map(monthDate => {
+      const monthKey = `${monthDate.getFullYear()}-${monthDate.getMonth()}`;
+      const monthData = modelMonthData[modelName]?.[monthKey];
+      
+      if (!monthData || monthData.length === 0) return null;
+      
+      // Calculate average pass@1 across active languages
+      let avgSum = 0, avgCount = 0;
+      LANGUAGES.forEach(l => {
+        const key = `pass@1[${l}]`;
+        const val = mean(monthData.map(r => r[key] ?? 0)) * 100;
+        if (activeLangs.has(l)) { avgSum += val; avgCount++; }
+      });
+      return avgCount > 0 ? avgSum / avgCount : 0;
+    });
+    
+    return {
+      label: modelName,
+      data,
+      backgroundColor: color.border,
+      borderColor: color.border,
+      borderWidth: 2,
+    };
+  });
+  
+  const ctx = document.getElementById('barplotChart');
+  
+  // Detect mobile screen size
+  const isMobile = window.innerWidth <= 768;
+  const xTickSize = isMobile ? 7 : 11;
+  const yTickSize = isMobile ? 7 : 11;
+  const legendSize = isMobile ? 7 : 12;
+  const tooltipTitleSize = isMobile ? 8 : 13;
+  const tooltipBodySize = isMobile ? 7 : 12;
+  
+  if (compareBarChart) {
+    compareBarChart.data.labels = labels;
+    compareBarChart.data.datasets = datasets;
+    compareBarChart.options.scales.x.ticks.font.size = xTickSize;
+    compareBarChart.options.scales.y.ticks.font.size = yTickSize;
+    compareBarChart.options.plugins.legend.labels.font.size = legendSize;
+    compareBarChart.options.plugins.tooltip.titleFont.size = tooltipTitleSize;
+    compareBarChart.options.plugins.tooltip.bodyFont.size = tooltipBodySize;
+    compareBarChart.update('none');
+    return;
+  }
+  
+  compareBarChart = new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      animation: { duration: 600, easing: 'easeOutQuart' },
+      scales: {
+        x: {
+          ticks: { color: '#94a3b8', font: { family: "'Inter', sans-serif", size: xTickSize } },
+          grid: { display: false },
+        },
+        y: {
+          beginAtZero: true,
+          max: 100,
+          ticks: { 
+            stepSize: 20, 
+            color: '#94a3b8', 
+            font: { family: "'JetBrains Mono', monospace", size: yTickSize },
+            callback: (value) => value + '%'
+          },
+          grid: { color: 'rgba(71, 85, 105, 0.3)' },
+        }
+      },
+      plugins: {
+        legend: { 
+          display: true, 
+          position: 'bottom', 
+          labels: { 
+            color: '#cbd5e1', 
+            padding: 16, 
+            usePointStyle: true, 
+            pointStyle: 'rect',
+            font: { family: "'Inter', sans-serif", size: legendSize, weight: '500' }
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(15, 23, 42, 0.95)', 
+          titleColor: '#f1f5f9', 
+          bodyColor: '#cbd5e1',
+          borderColor: '#475569', 
+          borderWidth: 1, 
+          cornerRadius: 8, 
+          padding: 12,
+          titleFont: { family: "'Inter', sans-serif", size: tooltipTitleSize, weight: '600' },
+          bodyFont: { family: "'JetBrains Mono', monospace", size: tooltipBodySize },
+          callbacks: { 
+            label: (ctx) => ctx.dataset.label + ': ' + (ctx.raw !== null ? ctx.raw.toFixed(1) + '%' : 'N/A')
+          }
+        }
+      }
+    }
+  });
+}
+
+// ============================================================
+// FILTERS TOGGLE FOR MOBILE
+// ============================================================
+function toggleFilters() {
+  const toggle = document.getElementById('filtersToggle');
+  const container = document.getElementById('filtersContainer');
+  toggle.classList.toggle('active');
+  container.classList.toggle('active');
+}
+
+function toggleCompareFilters() {
+  const toggle = document.getElementById('compareFiltersToggle');
+  const container = document.getElementById('compareFiltersContainer');
+  toggle.classList.toggle('active');
+  container.classList.toggle('active');
+}
+
+// ============================================================
+// MOBILE MENU TOGGLE
+// ============================================================
+function toggleMobileMenu() {
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.classList.toggle('active');
+  mobileMenu.classList.toggle('active');
+}
+
+function closeMobileMenu() {
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.classList.remove('active');
+  mobileMenu.classList.remove('active');
+}
+
+function toggleMobileLang() {
+  const hamburgerLang = document.getElementById('hamburgerLang');
+  const mobileLangMenu = document.getElementById('mobileLangMenu');
+  hamburgerLang.classList.toggle('active');
+  mobileLangMenu.classList.toggle('active');
+}
+
+function closeMobileLang() {
+  const hamburgerLang = document.getElementById('hamburgerLang');
+  const mobileLangMenu = document.getElementById('mobileLangMenu');
+  hamburgerLang.classList.remove('active');
+  mobileLangMenu.classList.remove('active');
+}
+
+// Close mobile menus when clicking outside
+document.addEventListener('click', (e) => {
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const hamburgerLang = document.getElementById('hamburgerLang');
+  const mobileLangMenu = document.getElementById('mobileLangMenu');
+  
+  if (mobileMenu && hamburger && 
+      !mobileMenu.contains(e.target) && 
+      !hamburger.contains(e.target) &&
+      mobileMenu.classList.contains('active')) {
+    closeMobileMenu();
+  }
+  
+  if (mobileLangMenu && hamburgerLang && 
+      !mobileLangMenu.contains(e.target) && 
+      !hamburgerLang.contains(e.target) &&
+      mobileLangMenu.classList.contains('active')) {
+    closeMobileLang();
+  }
+});
 
 // ============================================================
 // INIT

@@ -1,4 +1,5 @@
 ---
 title: השוואת מודלים
-selectModels: "בחרו מודלים להשוואה:"
+selectModels: "בחר מודלים להשוואה:"
+compareBarplotTitle: "Pass@1 לפי חודש"
 ---
